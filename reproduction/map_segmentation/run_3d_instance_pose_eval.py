@@ -66,7 +66,9 @@ def run(room):
   for z in c['items']:
    q=z['points'];ii,jj=grid_indices(q[:,0],q[:,2],state);inside=(ii>=0)&(ii<N)&(jj>=0)&(jj<N);ii=ii[inside];jj=jj[inside]
    # large evidence retains priority; otherwise the 3-D instance writes small.
-   if coarse==2: pred[ii,jj]=np.maximum(pred[ii,jj],2)
+   # Require cross-view support for small instances.  A single SAM proposal
+   # is kept as evidence but cannot overwrite the fused semantic grid.
+   if coarse==2 and len(c['items'])>=2: pred[ii,jj]=np.maximum(pred[ii,jj],2)
    else: pred[ii,jj]=3
  old=np.load(p/'semantic_elevation/maps.npz');rep=score(old['GT_semantic'],pred,old['GT_height'],hp,old['valid_GT']);rep.update({'room':room,'instances':len(clusters),'proposals':len(components),'sam':True,'priority':'large > small > floor'});dump(OUT/f'room-{room:02d}.json',rep);np.savez_compressed(OUT/f'room-{room:02d}.npz',GT=old['GT_semantic'],valid=old['valid_GT'],pred=pred,GT_height=old['GT_height'],pred_height=hp);return rep
 

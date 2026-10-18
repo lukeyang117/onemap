@@ -1,0 +1,196 @@
+{
+  "rooms": [
+    {
+      "accuracy": 68.36565096952909,
+      "correct": 2468,
+      "GT": 3610,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 1280,
+          "predicted": 1410,
+          "recall": 59.841047218326324,
+          "precision": 90.78014184397163
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 1,
+          "predicted": 40,
+          "recall": 4.545454545454546,
+          "precision": 2.5
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 1187,
+          "predicted": 1976,
+          "recall": 81.91856452726017,
+          "precision": 60.07085020242915
+        }
+      ],
+      "height_MAE_cm": 59.190271420152065,
+      "cm": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          52,
+          1280,
+          39,
+          768
+        ],
+        [
+          0,
+          0,
+          1,
+          21
+        ],
+        [
+          132,
+          130,
+          0,
+          1187
+        ]
+      ],
+      "room": 10,
+      "instances": 16,
+      "proposals": 24,
+      "sam": true,
+      "priority": "large > small > floor"
+    },
+    {
+      "accuracy": 65.36542412679776,
+      "correct": 2227,
+      "GT": 3407,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 931,
+          "correct": 227,
+          "predicted": 567,
+          "recall": 24.382384532760472,
+          "precision": 40.0352733686067
+        },
+        {
+          "class": "small",
+          "gt": 0,
+          "correct": 0,
+          "predicted": 10,
+          "recall": null,
+          "precision": 0.0
+        },
+        {
+          "class": "large",
+          "gt": 2476,
+          "correct": 2000,
+          "predicted": 2567,
+          "recall": 80.77544426494346,
+          "precision": 77.91195948578107
+        }
+      ],
+      "height_MAE_cm": 117.48507911885862,
+      "cm": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          137,
+          227,
+          0,
+          567
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          126,
+          340,
+          10,
+          2000
+        ]
+      ],
+      "room": 9,
+      "instances": 19,
+      "proposals": 24,
+      "sam": true,
+      "priority": "large > small > floor"
+    },
+    {
+      "accuracy": 46.61606578115117,
+      "correct": 737,
+      "GT": 1581,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 830,
+          "correct": 324,
+          "predicted": 492,
+          "recall": 39.036144578313255,
+          "precision": 65.85365853658537
+        },
+        {
+          "class": "small",
+          "gt": 24,
+          "correct": 0,
+          "predicted": 32,
+          "recall": 0.0,
+          "precision": 0.0
+        },
+        {
+          "class": "large",
+          "gt": 727,
+          "correct": 413,
+          "predicted": 746,
+          "recall": 56.808803301237965,
+          "precision": 55.361930294906166
+        }
+      ],
+      "height_MAE_cm": 88.35696951825265,
+      "cm": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          161,
+          324,
+          25,
+          320
+        ],
+        [
+          0,
+          11,
+          0,
+          13
+        ],
+        [
+          150,
+          157,
+          7,
+          413
+        ]
+      ],
+      "room": 17,
+      "instances": 21,
+      "proposals": 24,
+      "sam": true,
+      "priority": "large > small > floor"
+    }
+  ],
+  "pooled_accuracy": 63.17748313561293,
+  "GT": 8598,
+  "correct": 5432
+}
