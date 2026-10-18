@@ -1,0 +1,92 @@
+[
+  {
+    "room": 9,
+    "pose_source": "ICP fallback",
+    "semantic_accuracy_percent": 1.6436747872028177,
+    "height_MAE_cm": 0.6733721068321793,
+    "height_matched_cells": 61,
+    "class_accuracy": [
+      {
+        "class_id": 1,
+        "class_name": "floor_stairs",
+        "GT_cells": 931,
+        "correct_cells": 0,
+        "accuracy_percent": 0.0
+      },
+      {
+        "class_id": 2,
+        "class_name": "small_objects",
+        "GT_cells": 0,
+        "correct_cells": 0,
+        "accuracy_percent": null
+      },
+      {
+        "class_id": 3,
+        "class_name": "large_objects",
+        "GT_cells": 2476,
+        "correct_cells": 56,
+        "accuracy_percent": 2.261712439418417
+      }
+    ]
+  },
+  {
+    "room": 10,
+    "pose_source": "FAST-LIO",
+    "semantic_accuracy_percent": 14.459833795013852,
+    "height_MAE_cm": 133.22959355467205,
+    "height_matched_cells": 729,
+    "class_accuracy": [
+      {
+        "class_id": 1,
+        "class_name": "floor_stairs",
+        "GT_cells": 2139,
+        "correct_cells": 432,
+        "accuracy_percent": 20.196353436185134
+      },
+      {
+        "class_id": 2,
+        "class_name": "small_objects",
+        "GT_cells": 22,
+        "correct_cells": 1,
+        "accuracy_percent": 4.545454545454546
+      },
+      {
+        "class_id": 3,
+        "class_name": "large_objects",
+        "GT_cells": 1449,
+        "correct_cells": 89,
+        "accuracy_percent": 6.142167011732229
+      }
+    ]
+  },
+  {
+    "room": 17,
+    "pose_source": "ICP fallback",
+    "semantic_accuracy_percent": 0.1265022137887413,
+    "height_MAE_cm": 96.6366779182738,
+    "height_matched_cells": 7,
+    "class_accuracy": [
+      {
+        "class_id": 1,
+        "class_name": "floor_stairs",
+        "GT_cells": 830,
+        "correct_cells": 0,
+        "accuracy_percent": 0.0
+      },
+      {
+        "class_id": 2,
+        "class_name": "small_objects",
+        "GT_cells": 24,
+        "correct_cells": 0,
+        "accuracy_percent": 0.0
+      },
+      {
+        "class_id": 3,
+        "class_name": "large_objects",
+        "GT_cells": 727,
+        "correct_cells": 2,
+        "accuracy_percent": 0.2751031636863824
+      }
+    ]
+  }
+]

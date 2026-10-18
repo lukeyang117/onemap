@@ -41,6 +41,14 @@ zero. The control maps are 28.56%, 61.25%, and 67.43%, respectively. The
 Room 10 visualization is
 `reproduction/map_segmentation/fastlio_results/room-10/semantic-elevation-comparison-axis.png`.
 
+The scan-to-scan fallback (`scanmatch_fallback.py`) is now available as a
+diagnostic watchdog for frames where FAST-LIO reports no effective points. Its
+hybrid three-room baseline is Room 9 **1.64%**, Room 10 **14.46%**, and Room 17
+**0.13%**. These fallback scores have very sparse height coverage (61 and 7
+cells in Rooms 9 and 17), so the small-object score is still 0%; the fallback
+improves pose continuity but does not add semantic evidence. See
+`fastlio_results/summary-hybrid.json` for the per-class counts.
+
 Example:
 
 ```bash

@@ -1,0 +1,78 @@
+{
+  "semantic_accuracy_percent": 0.1265022137887413,
+  "GT_cells": 1581,
+  "full_GT_cells": 1885,
+  "excluded_unobserved_cells": 304,
+  "observed_only": true,
+  "room_id": 17,
+  "correct_cells": 2,
+  "unmapped_GT_cells": 1574,
+  "class_accuracy": [
+    {
+      "class_id": 1,
+      "class_name": "floor_stairs",
+      "GT_cells": 830,
+      "correct_cells": 0,
+      "accuracy_percent": 0.0
+    },
+    {
+      "class_id": 2,
+      "class_name": "small_objects",
+      "GT_cells": 24,
+      "correct_cells": 0,
+      "accuracy_percent": 0.0
+    },
+    {
+      "class_id": 3,
+      "class_name": "large_objects",
+      "GT_cells": 727,
+      "correct_cells": 2,
+      "accuracy_percent": 0.2751031636863824
+    }
+  ],
+  "height_MAE_cm": 96.6366779182738,
+  "height_matched_cells": 7,
+  "grid_size_m": 0.1,
+  "mapping_RGBD_frames": 8,
+  "camera_height_m": 0.3,
+  "camera_forward_offset_m": 0.3,
+  "SAM_calls": 0,
+  "priority": "large_objects (3) > small_objects (2) > floor_stairs (1)",
+  "height_rule": "Maximum height above the common floor datum, independently of selected semantic category",
+  "GT_source": "Exact planar cell clipping of independent room 17 annotated triangles plus added object asset meshes. Ceiling triangles excluded before height/semantic reduction.",
+  "prediction_source": "Eight raw depth reconstructions; semantics queried from losslessly reloaded original OneMap feature grid. Predicted ceiling/unknown/unmapped labels excluded before height/semantic reduction.",
+  "category_mapping": {
+    "floor_stairs": [
+      "floor",
+      "stairs"
+    ],
+    "small_objects": [
+      "banana",
+      "tin_can",
+      "cracker_box"
+    ],
+    "large_objects": "All remaining annotated semantic classes, including walls, furniture, objects and misc; excluding ceiling.",
+    "excluded": [
+      "ceiling",
+      "unmapped",
+      "unannotated"
+    ]
+  },
+  "semantic_formula": "100 * number of GT-valid XY cells with identical three-class labels / number of GT-valid XY cells. Missing prediction counts as incorrect.",
+  "height_formula": "100 * mean(abs(pred_max_height - GT_max_height)) on GT-valid cells with a valid predicted height; units cm. Missing cells excluded from MAE and included as semantic errors.",
+  "domain": "GT cells with at least one input depth hit. Ceiling-filtered saved labels remain errors. Predictions outside the GT domain are not scored.",
+  "limitations": [
+    "Semantic categories are mapped after upstream OneMap feature fusion; original OneMap cannot separate classes by height within one planar cell.",
+    "Priority can hide small objects sharing an XY cell with a large object.",
+    "Small objects are the three added asset classes, not a physical size threshold.",
+    "No true stair surfaces in this room; floor_stairs measures floor only.",
+    "For predicted height, ceiling removal relies on predicted semantics, not GT masks; a ceiling misclassified as another class can still inflate predicted height."
+  ],
+  "saved_map_sha256": "ac8e70f44b6798816c5ab142e3384c9f955445c5e79500c0b44d69693c9d79d1",
+  "checks": {
+    "independent_confusion_equal": true,
+    "frame_fusion_equal_to_single_reduction": true,
+    "eight_mapping_frames": true,
+    "no_GT_masks_used_for_prediction": true
+  }
+}
