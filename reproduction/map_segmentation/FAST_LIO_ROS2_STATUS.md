@@ -25,6 +25,15 @@ sector points by horizontal angle, and supports a four-sector/8-line profile.
 The `--fastlio` motion profile adds a 1.5 s stationary initialization and
 smoothstep acceleration between views.
 
+The rolling-scan revision also reprojects each return using the interpolated
+pose at its per-point time and writes that time into PointCloud2. A pure
+FAST-LIO Room 9 replay still diverged (about 1.5 km over the 67 s sequence),
+so this revision is a sensor-model diagnostic and is not used for OneMap
+accuracy claims. The failure indicates that a depth snapshot plus synthetic
+motion is still not equivalent to a real spinning LiDAR scan; all three-room
+accuracy numbers remain withheld until FAST-LIO itself produces a bounded
+trajectory.
+
 Room 10, observed-only scoring:
 
 | map pose source | semantic accuracy | floor/stairs | small objects | large objects | height MAE |

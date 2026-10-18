@@ -48,7 +48,7 @@ def main():
             scan_lines = int(rings.max()) + 1 if len(rings) else args.scan_lines
             # Keep time zero so FAST-LIO derives per-ring timing from yaw; the
             # camera raster is arranged as 32 contiguous scan lines.
-            rel = np.zeros(n, dtype=np.float32)
+            rel = np.asarray(d["point_time"], np.float32) if "point_time" in d else np.zeros(n, dtype=np.float32)
             # PCL_ADD_POINT4D includes a 4-byte alignment slot, so the
             # registered Velodyne struct is x/y/z at 0/4/8, intensity at 16,
             # time at 20, ring at 24 and 32 bytes per point.

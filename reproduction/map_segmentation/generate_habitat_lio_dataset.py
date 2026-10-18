@@ -64,6 +64,27 @@ def depth_to_lidar(depth, pose, camera_height, camera_forward, rows=32, cols=512
     return points_sensor_fast.astype(np.float32),valid,ring_ids
 
 
+def rolling_scan(points_fast, rings, pose0, pose1, camera_height=.3, camera_forward=.3, duration=.1, transform=HABITAT_TO_FASTLIO):
+    """Apply a continuous body motion to a depth snapshot to model scan time."""
+    if pose1 is None or len(points_fast) == 0:
+        return points_fast, np.zeros(len(points_fast), np.float32)
+    r0=Rotation.from_quat(pose0['rotation_xyzw']); r1=Rotation.from_quat(pose1['rotation_xyzw'])
+    # The simulated camera image spans one scan; each ring is sampled over it.
+    yaw=np.arctan2(points_fast[:,1],points_fast[:,0]); times=np.zeros(len(points_fast),np.float64)
+    for ring in np.unique(rings):
+        ix=np.flatnonzero(rings==ring); lo,hi=yaw[ix].min(),yaw[ix].max()
+        times[ix]=(yaw[ix]-lo)/max(hi-lo,1e-6)*duration
+    ph=points_fast.astype(np.float64)@transform
+    c0=np.asarray(pose0['position'])+r0.apply([0.,camera_height,-camera_forward])
+    world=c0+r0.apply(ph)
+    alpha=np.clip(times/duration,0.,1.)
+    r=Slerp([0.,1.],Rotation.concatenate([r0,r1]))(alpha)
+    pos=(1-alpha[:,None])*np.asarray(pose0['position'])+alpha[:,None]*np.asarray(pose1['position'])
+    c=pos+r.apply(np.tile([0.,camera_height,-camera_forward],(len(points_fast),1)))
+    ph2=r.inv().apply(world-c)@transform.T
+    return ph2.astype(np.float32),times.astype(np.float32)
+
+
 def imu_from_trajectory(poses, dt):
     pos=np.asarray([p['position'] for p in poses],np.float64)
     rot=Rotation.from_quat(np.asarray([p['rotation_xyzw'] for p in poses]))
@@ -84,9 +105,10 @@ def main():
         args.spacing=min(args.spacing, .04)
     src=ROOT/f'reproduction/map_segmentation/multi_room/room-{args.room:02d}';design=json.loads((src/'design.json').read_text());poses,dt=trajectory(design,args.spacing,args.dt,smooth=args.fastlio);args.output.mkdir(parents=True,exist_ok=True);(args.output/'lidar').mkdir(exist_ok=True)
     with make_sim(camera_height=.3,camera_forward=.3) as sim:
-        for p in poses:
+        for pi,p in enumerate(poses):
+            next_pose=poses[pi+1] if pi+1<len(poses) else None
             if not args.lidar360:
-                set_pose(sim,p);obs=sim.get_sensor_observations();depth=np.asarray(obs['depth']);points,valid,rings=depth_to_lidar(depth,p,.3,.3)
+                set_pose(sim,p);obs=sim.get_sensor_observations();depth=np.asarray(obs['depth']);points,valid,rings=depth_to_lidar(depth,p,.3,.3);points,point_time=rolling_scan(points,rings,p,next_pose)
             else:
                 # Four 90-degree sectors provide scan overlap in rooms where a
                 # single 90-degree RGB-D view sees mostly a nearby wall.  Eight
@@ -98,10 +120,10 @@ def main():
                 # Depth validity is per pixel, so each sector has a variable
                 # number of returns.  Keep sector-major order; the ROS2 writer
                 # assigns deterministic synthetic rings to the resulting scan.
-                points=np.concatenate(chunks,axis=0); rings=np.concatenate(ring_chunks,axis=0)
+                points=np.concatenate(chunks,axis=0); rings=np.concatenate(ring_chunks,axis=0); points,point_time=rolling_scan(points,rings,p,next_pose)
                 order=np.lexsort((np.arctan2(points[:,1],points[:,0]), rings))
                 points=points[order]; rings=rings[order]
-            np.savez_compressed(args.output/'lidar'/f'{p["index"]:06d}.npz',timestamp=p['timestamp'],points_body=points,rings=rings)
+            np.savez_compressed(args.output/'lidar'/f'{p["index"]:06d}.npz',timestamp=p['timestamp'],points_body=points,rings=rings,point_time=point_time)
     imu=imu_from_trajectory(poses,dt);np.savez_compressed(args.output/'imu.npz',**imu);dump(args.output/'ground-truth-poses.json',{'poses':poses,'camera':design['camera'],'source':'Habitat simulator ground truth'});dump(args.output/'manifest.json',{'room':args.room,'frames':len(poses),'dt_s':dt,'motion_spacing_m':args.spacing,'motion_profile':'stationary initialization + smoothstep piecewise SLERP interpolation' if args.fastlio else 'piecewise SLERP/linear interpolation','axis_transform_habitat_to_fastlio':HABITAT_TO_FASTLIO.tolist(),'lidar_origin':'camera optical center','lidar_sectors':4 if args.lidar360 else 1,'lidar_to_imu_extrinsic_fastlio_m':[0.3,0.0,0.3],'lidar_points_per_frame':'variable from valid depth rays','lidar_frame':'FAST-LIO Velodyne convention (forward,left,up)','imu_frame':'FAST-LIO body convention (forward,left,up)','fastlio_ready':False,'reason':'ROS message conversion and FAST-LIO replay are separate steps'})
     print(f'Generated room {args.room}: {len(poses)} synchronized frames at {args.output}',flush=True)
 
