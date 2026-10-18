@@ -176,12 +176,15 @@ fraction to 0.9 gives 60.36%. A 5 cm floor prior gives 63.30% in Room 10, but
 it is unsafe as a fixed rule: Room 9 falls to 37.36% because its FAST-LIO
 height alignment is different.
 
-The deployable version therefore enables the floor prior only when the
+The current candidate version therefore enables the floor prior only when the
 projected frontend labels contain enough floor evidence, and only uses the
 large fraction 0.9 when the consistency gate actually removes a low-tail
 view. With this conditional policy, the current three-room results are Room 9
 54.53%, Room 10 63.30%, Room 17 47.56%, pooled **56.93%**. Room 9 and Room 17
 retain the original large evidence fraction and all eight views.
+The 5 cm threshold currently uses the Habitat room floor datum for this
+simulation; on the robot it must be replaced by an online ground-plane height
+estimate before calling this fully deployment-ready.
 
 Two oracle diagnostics locate the remaining ceiling. With GT poses but the
 current ConvNeXt-L semantic labels, the no-instance map reaches 67.52% pooled.
