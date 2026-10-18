@@ -22,7 +22,10 @@ def main():
           for ai,aa in enumerate(az):
             tau=ai/args.azimuth*dt; a=tau/dt; r=slerp(a); pos=(1-a)*np.asarray(p0['position'])+a*np.asarray(p1['position']); origin=pos+r.apply([0.,.3,-.3])
             pf=np.array([np.cos(el)*np.cos(aa),np.cos(el)*np.sin(aa),np.sin(el)])
-            ph=HABITAT_TO_FASTLIO@pf; direction=r.apply(ph)
+            # pf is in FAST-LIO (forward,left,up).  Convert the ray direction
+            # back to Habitat (right,up,backward) with the inverse transform;
+            # hit points are converted in the opposite direction below.
+            ph=HABITAT_TO_FASTLIO.T@pf; direction=r.apply(ph)
             hits=sim.cast_ray(habitat_sim.geo.Ray(mn.Vector3(origin),mn.Vector3(direction)))
             if not hits.has_hits(): continue
             hit=np.asarray(hits.hits[0].point,dtype=np.float64); local=r.inv().apply(hit-origin); pl=HABITAT_TO_FASTLIO@local

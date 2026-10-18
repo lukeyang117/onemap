@@ -1,0 +1,63 @@
+{
+  "accuracy": 68.25484764542936,
+  "correct": 2464,
+  "GT": 3610,
+  "classes": [
+    {
+      "class": "floor",
+      "gt": 2139,
+      "correct": 1280,
+      "predicted": 1410,
+      "recall": 59.841047218326324,
+      "precision": 90.78014184397163
+    },
+    {
+      "class": "small",
+      "gt": 22,
+      "correct": 7,
+      "predicted": 241,
+      "recall": 31.818181818181817,
+      "precision": 2.904564315352697
+    },
+    {
+      "class": "large",
+      "gt": 1449,
+      "correct": 1177,
+      "predicted": 1775,
+      "recall": 81.22843340234644,
+      "precision": 66.30985915492958
+    }
+  ],
+  "height_MAE_cm": 59.190271420152065,
+  "cm": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      52,
+      1280,
+      224,
+      583
+    ],
+    [
+      0,
+      0,
+      7,
+      15
+    ],
+    [
+      132,
+      130,
+      10,
+      1177
+    ]
+  ],
+  "room": 10,
+  "instances": 16,
+  "proposals": 24,
+  "sam": true,
+  "priority": "large > small > floor"
+}
