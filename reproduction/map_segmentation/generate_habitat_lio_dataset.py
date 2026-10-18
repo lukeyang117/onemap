@@ -58,12 +58,14 @@ def imu_from_trajectory(poses, dt):
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--room',type=int,required=True);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--spacing',type=float,default=.12);ap.add_argument('--dt',type=float,default=.1);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--room',type=int,required=True);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--spacing',type=float,default=.12);ap.add_argument('--dt',type=float,default=.1);ap.add_argument('--fastlio',action='store_true',help='use dense 4 cm/frame motion sampling for FAST-LIO replay');args=ap.parse_args()
+    if args.fastlio:
+        args.spacing=min(args.spacing, .04)
     src=ROOT/f'reproduction/map_segmentation/multi_room/room-{args.room:02d}';design=json.loads((src/'design.json').read_text());poses,dt=trajectory(design,args.spacing,args.dt);args.output.mkdir(parents=True,exist_ok=True);(args.output/'lidar').mkdir(exist_ok=True)
     with make_sim(camera_height=.3,camera_forward=.3) as sim:
         for p in poses:
             set_pose(sim,p);obs=sim.get_sensor_observations();depth=np.asarray(obs['depth']);points,valid=depth_to_lidar(depth,p,.3,.3);np.savez_compressed(args.output/'lidar'/f'{p["index"]:06d}.npz',timestamp=p['timestamp'],points_body=points)
-    imu=imu_from_trajectory(poses,dt);np.savez_compressed(args.output/'imu.npz',**imu);dump(args.output/'ground-truth-poses.json',{'poses':poses,'camera':design['camera'],'source':'Habitat simulator ground truth'});dump(args.output/'manifest.json',{'room':args.room,'frames':len(poses),'dt_s':dt,'lidar_points_per_frame':'variable from valid depth rays','lidar_frame':'synthetic lidar frame coincident with Habitat body frame','imu_frame':'Habitat body frame','fastlio_ready':False,'reason':'ROS message conversion and FAST-LIO replay are separate steps'})
+    imu=imu_from_trajectory(poses,dt);np.savez_compressed(args.output/'imu.npz',**imu);dump(args.output/'ground-truth-poses.json',{'poses':poses,'camera':design['camera'],'source':'Habitat simulator ground truth'});dump(args.output/'manifest.json',{'room':args.room,'frames':len(poses),'dt_s':dt,'motion_spacing_m':args.spacing,'motion_profile':'dense piecewise SLERP/linear interpolation' if args.fastlio else 'piecewise SLERP/linear interpolation','lidar_points_per_frame':'variable from valid depth rays','lidar_frame':'synthetic lidar frame coincident with Habitat body frame','imu_frame':'Habitat body frame','fastlio_ready':False,'reason':'ROS message conversion and FAST-LIO replay are separate steps'})
     print(f'Generated room {args.room}: {len(poses)} synchronized frames at {args.output}',flush=True)
 
 if __name__=='__main__':main()
