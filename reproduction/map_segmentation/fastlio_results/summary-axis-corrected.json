@@ -1,0 +1,86 @@
+[
+  {
+    "room": 9,
+    "semantic_accuracy_percent": 11.8579395362489,
+    "height_MAE_cm": 69.79335236465938,
+    "class_accuracy": [
+      {
+        "class_id": 1,
+        "class_name": "floor_stairs",
+        "GT_cells": 931,
+        "correct_cells": 11,
+        "accuracy_percent": 1.1815252416756177
+      },
+      {
+        "class_id": 2,
+        "class_name": "small_objects",
+        "GT_cells": 0,
+        "correct_cells": 0,
+        "accuracy_percent": null
+      },
+      {
+        "class_id": 3,
+        "class_name": "large_objects",
+        "GT_cells": 2476,
+        "correct_cells": 393,
+        "accuracy_percent": 15.87237479806139
+      }
+    ]
+  },
+  {
+    "room": 10,
+    "semantic_accuracy_percent": 35.65096952908588,
+    "height_MAE_cm": 151.40332612290095,
+    "class_accuracy": [
+      {
+        "class_id": 1,
+        "class_name": "floor_stairs",
+        "GT_cells": 2139,
+        "correct_cells": 1051,
+        "accuracy_percent": 49.135109864422624
+      },
+      {
+        "class_id": 2,
+        "class_name": "small_objects",
+        "GT_cells": 22,
+        "correct_cells": 0,
+        "accuracy_percent": 0.0
+      },
+      {
+        "class_id": 3,
+        "class_name": "large_objects",
+        "GT_cells": 1449,
+        "correct_cells": 236,
+        "accuracy_percent": 16.287094547964113
+      }
+    ]
+  },
+  {
+    "room": 17,
+    "semantic_accuracy_percent": 9.993674889310562,
+    "height_MAE_cm": 230.89599165305512,
+    "class_accuracy": [
+      {
+        "class_id": 1,
+        "class_name": "floor_stairs",
+        "GT_cells": 830,
+        "correct_cells": 128,
+        "accuracy_percent": 15.421686746987952
+      },
+      {
+        "class_id": 2,
+        "class_name": "small_objects",
+        "GT_cells": 24,
+        "correct_cells": 0,
+        "accuracy_percent": 0.0
+      },
+      {
+        "class_id": 3,
+        "class_name": "large_objects",
+        "GT_cells": 727,
+        "correct_cells": 30,
+        "accuracy_percent": 4.126547455295736
+      }
+    ]
+  }
+]

@@ -47,6 +47,12 @@ def load_fastlio_poses(path, design):
     if records is None:
         raise ValueError("FAST-LIO pose file must contain a 'poses' list")
     alignment = _matrix(raw.get("world_alignment", np.eye(4).tolist())) if isinstance(raw, dict) else np.eye(4)
+    # Optional fixed body-axis conversion for synthetic Habitat/FAST-LIO
+    # replays.  Positions are already in the aligned world frame, while the
+    # body orientation must also cross the sensor convention.
+    axis = np.asarray(raw.get("axis_transform_habitat_to_fastlio", np.eye(3)), dtype=np.float64) if isinstance(raw, dict) else np.eye(3)
+    if axis.shape != (3, 3):
+        raise ValueError("axis_transform_habitat_to_fastlio must be 3x3")
     by_index = {}
     camera = design.get("camera", {})
     forward = float(camera.get("forward_offset_m", 0.0))
@@ -54,6 +60,7 @@ def load_fastlio_poses(path, design):
     for item in records:
         idx = int(item["index"])
         body = alignment @ _pose_matrix(item["position"], item["rotation_xyzw"])
+        body[:3, :3] = body[:3, :3] @ axis
         # Camera is mounted forward along the body optical forward (-Z).
         camera_offset = body[:3, :3] @ np.array([0.0, height, -forward])
         camera_world = body[:3, 3] + camera_offset

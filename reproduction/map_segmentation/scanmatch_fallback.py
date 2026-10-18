@@ -60,7 +60,10 @@ def main():
         if i:
             r, t, n = register(scans[i-1], scan)
             step = np.eye(4); step[:3,:3] = r; step[:3,3] = t
-            t_world_lidar = t_world_lidar @ np.linalg.inv(step)
+            # ``step`` maps current-scan points into the previous scan frame:
+            # p_prev = step * p_cur.  Therefore the current world pose is
+            # T_world_prev * step (not its inverse).
+            t_world_lidar = t_world_lidar @ step
             quality.append(n)
         else:
             quality.append(len(scan))
