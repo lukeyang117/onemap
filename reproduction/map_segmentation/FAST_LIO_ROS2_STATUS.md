@@ -127,6 +127,12 @@ pose jitter, 52.74% with one view removed, 52.27% under depth corruption, and
 diagnostic, not a confidence interval; use `--trials 3` or more before making
 statistical claims.
 
+For the adaptive Room 10 chain, three repeated trials give 56.07% ± 0.00%
+clean (the same deterministic input), 53.78% ± 1.30% under pose jitter with
+worst case 52.08%, and 55.97% ± 0.18% under depth corruption with worst case
+55.76%. Mean coverage in those runs is 89.25%, 90.81%, and 90.36%,
+respectively.
+
 The new self-consistency gate compares each view's projected coarse semantic
 labels with the other views, without GT. It only activates when the
 consistency distribution has a high median and a clear low tail, avoiding

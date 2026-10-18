@@ -263,5 +263,138 @@
       "small_recall_percent": 0.0,
       "large_recall_percent": 63.216011042097996
     }
-  ]
+  ],
+  "adaptive_room10_repeated_trials": {
+    "trials": 3,
+    "rows": [
+      {
+        "room": 10,
+        "condition": "clean",
+        "trial": 0,
+        "accuracy_percent": 56.066481994459835,
+        "observed_accuracy_percent": 62.81812538795779,
+        "coverage_percent": 89.25207756232687,
+        "height_MAE_cm": 94.06144341233502,
+        "small_recall_percent": 4.545454545454546,
+        "small_precision_percent": 1.7241379310344827,
+        "large_recall_percent": 65.0103519668737
+      },
+      {
+        "room": 10,
+        "condition": "clean",
+        "trial": 1,
+        "accuracy_percent": 56.066481994459835,
+        "observed_accuracy_percent": 62.81812538795779,
+        "coverage_percent": 89.25207756232687,
+        "height_MAE_cm": 94.06144341233502,
+        "small_recall_percent": 4.545454545454546,
+        "small_precision_percent": 1.7241379310344827,
+        "large_recall_percent": 65.0103519668737
+      },
+      {
+        "room": 10,
+        "condition": "clean",
+        "trial": 2,
+        "accuracy_percent": 56.066481994459835,
+        "observed_accuracy_percent": 62.81812538795779,
+        "coverage_percent": 89.25207756232687,
+        "height_MAE_cm": 94.06144341233502,
+        "small_recall_percent": 4.545454545454546,
+        "small_precision_percent": 1.7241379310344827,
+        "large_recall_percent": 65.0103519668737
+      },
+      {
+        "room": 10,
+        "condition": "pose-jitter",
+        "trial": 0,
+        "accuracy_percent": 55.23545706371191,
+        "observed_accuracy_percent": 61.48627813752698,
+        "coverage_percent": 89.83379501385042,
+        "height_MAE_cm": 100.32714600403905,
+        "small_recall_percent": 9.090909090909092,
+        "small_precision_percent": 6.666666666666667,
+        "large_recall_percent": 61.55969634230504
+      },
+      {
+        "room": 10,
+        "condition": "pose-jitter",
+        "trial": 1,
+        "accuracy_percent": 52.0775623268698,
+        "observed_accuracy_percent": 55.16431924882629,
+        "coverage_percent": 94.40443213296399,
+        "height_MAE_cm": 136.1554219011918,
+        "small_recall_percent": 0.0,
+        "small_precision_percent": 0.0,
+        "large_recall_percent": 74.46514837819186
+      },
+      {
+        "room": 10,
+        "condition": "pose-jitter",
+        "trial": 2,
+        "accuracy_percent": 54.016620498614955,
+        "observed_accuracy_percent": 61.243718592964825,
+        "coverage_percent": 88.1994459833795,
+        "height_MAE_cm": 116.61915708603314,
+        "small_recall_percent": 4.545454545454546,
+        "small_precision_percent": 3.225806451612903,
+        "large_recall_percent": 68.1159420289855
+      },
+      {
+        "room": 10,
+        "condition": "depth-corrupt",
+        "trial": 0,
+        "accuracy_percent": 55.7617728531856,
+        "observed_accuracy_percent": 61.74846625766871,
+        "coverage_percent": 90.30470914127424,
+        "height_MAE_cm": 100.28345292604656,
+        "small_recall_percent": 4.545454545454546,
+        "small_precision_percent": 1.7241379310344827,
+        "large_recall_percent": 66.3216011042098
+      },
+      {
+        "room": 10,
+        "condition": "depth-corrupt",
+        "trial": 1,
+        "accuracy_percent": 55.95567867036011,
+        "observed_accuracy_percent": 61.9441888991107,
+        "coverage_percent": 90.33240997229917,
+        "height_MAE_cm": 99.97373918701555,
+        "small_recall_percent": 4.545454545454546,
+        "small_precision_percent": 1.7241379310344827,
+        "large_recall_percent": 66.94271911663216
+      },
+      {
+        "room": 10,
+        "condition": "depth-corrupt",
+        "trial": 2,
+        "accuracy_percent": 56.204986149584485,
+        "observed_accuracy_percent": 62.14395099540582,
+        "coverage_percent": 90.4432132963989,
+        "height_MAE_cm": 99.51307146929548,
+        "small_recall_percent": 4.545454545454546,
+        "small_precision_percent": 1.694915254237288,
+        "large_recall_percent": 67.01173222912354
+      }
+    ],
+    "aggregate": {
+      "clean": {
+        "mean_accuracy_percent": 56.06648199445984,
+        "std_accuracy_percent": 7.105427357601002e-15,
+        "worst_accuracy_percent": 56.066481994459835,
+        "mean_coverage_percent": 89.25207756232687
+      },
+      "pose-jitter": {
+        "mean_accuracy_percent": 53.77654662973222,
+        "std_accuracy_percent": 1.3003336467061104,
+        "worst_accuracy_percent": 52.0775623268698,
+        "mean_coverage_percent": 90.81255771006464
+      },
+      "depth-corrupt": {
+        "mean_accuracy_percent": 55.9741458910434,
+        "std_accuracy_percent": 0.18141165932029849,
+        "worst_accuracy_percent": 55.7617728531856,
+        "mean_coverage_percent": 90.3601108033241
+      }
+    }
+  }
 }
