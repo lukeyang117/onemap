@@ -13,6 +13,11 @@ from scipy.spatial.transform import Rotation, Slerp
 from PIL import Image
 from scene import ROOT, make_sim, set_pose, dump
 
+# Habitat agent/camera axes are (right, up, backward).  FAST-LIO's usual
+# Velodyne convention is (forward, left, up).  Keeping this transform explicit
+# avoids feeding a valid PointCloud2 with an internally inconsistent frame.
+HABITAT_TO_FASTLIO = np.array([[0., 0., -1.], [-1., 0., 0.], [0., 1., 0.]], dtype=np.float64)
+
 
 def interpolate_pose(a, b, alpha):
     ra, rb = Rotation.from_quat(a['rotation_xyzw']), Rotation.from_quat(b['rotation_xyzw'])
@@ -42,8 +47,12 @@ def depth_to_lidar(depth, pose, camera_height, camera_forward, rows=32, cols=512
     R=Rotation.from_quat(pose['rotation_xyzw']).as_matrix();
     camera_world=np.asarray(pose['position'])+R@np.array([0.,camera_height,-camera_forward])
     world=cam@R.T+camera_world
-    body=np.asarray(pose['position']);points_body=(world-body)@R
-    return points_body.astype(np.float32),valid
+    # A LiDAR mounted at the camera origin.  Return coordinates in the
+    # FAST-LIO sensor frame; the IMU-to-LiDAR translation is written to the
+    # launch/config file and is therefore applied by FAST-LIO exactly once.
+    points_sensor_h=(world-camera_world)@R
+    points_sensor_fast=points_sensor_h@HABITAT_TO_FASTLIO.T
+    return points_sensor_fast.astype(np.float32),valid
 
 
 def imu_from_trajectory(poses, dt):
@@ -53,19 +62,36 @@ def imu_from_trajectory(poses, dt):
     gravity=np.array([0.,-9.81,0.]); lin=[];ang=[]
     for i,r in enumerate(rot):
         j=max(0,min(len(rot)-1,i+1)); delta=r.inv()*rot[j]; rv=delta.as_rotvec()/max(dt,1e-9)
-        lin.append(r.inv().apply(acc[i]-gravity));ang.append(rv)
+        lin_h=r.inv().apply(acc[i]-gravity)
+        # Rotate vector measurements into FAST-LIO's sensor/IMU axes.
+        lin.append(HABITAT_TO_FASTLIO@lin_h)
+        ang.append(HABITAT_TO_FASTLIO@rv)
     return {'timestamp':np.arange(len(poses))*dt,'linear_acceleration':np.asarray(lin,np.float32),'angular_velocity':np.asarray(ang,np.float32)}
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--room',type=int,required=True);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--spacing',type=float,default=.12);ap.add_argument('--dt',type=float,default=.1);ap.add_argument('--fastlio',action='store_true',help='use dense 4 cm/frame motion sampling for FAST-LIO replay');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--room',type=int,required=True);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--spacing',type=float,default=.12);ap.add_argument('--dt',type=float,default=.1);ap.add_argument('--fastlio',action='store_true',help='use dense 4 cm/frame motion sampling for FAST-LIO replay');ap.add_argument('--lidar360',action='store_true',help='simulate four synchronized 90-degree LiDAR sectors');args=ap.parse_args()
     if args.fastlio:
         args.spacing=min(args.spacing, .04)
     src=ROOT/f'reproduction/map_segmentation/multi_room/room-{args.room:02d}';design=json.loads((src/'design.json').read_text());poses,dt=trajectory(design,args.spacing,args.dt);args.output.mkdir(parents=True,exist_ok=True);(args.output/'lidar').mkdir(exist_ok=True)
     with make_sim(camera_height=.3,camera_forward=.3) as sim:
         for p in poses:
-            set_pose(sim,p);obs=sim.get_sensor_observations();depth=np.asarray(obs['depth']);points,valid=depth_to_lidar(depth,p,.3,.3);np.savez_compressed(args.output/'lidar'/f'{p["index"]:06d}.npz',timestamp=p['timestamp'],points_body=points)
-    imu=imu_from_trajectory(poses,dt);np.savez_compressed(args.output/'imu.npz',**imu);dump(args.output/'ground-truth-poses.json',{'poses':poses,'camera':design['camera'],'source':'Habitat simulator ground truth'});dump(args.output/'manifest.json',{'room':args.room,'frames':len(poses),'dt_s':dt,'motion_spacing_m':args.spacing,'motion_profile':'dense piecewise SLERP/linear interpolation' if args.fastlio else 'piecewise SLERP/linear interpolation','lidar_points_per_frame':'variable from valid depth rays','lidar_frame':'synthetic lidar frame coincident with Habitat body frame','imu_frame':'Habitat body frame','fastlio_ready':False,'reason':'ROS message conversion and FAST-LIO replay are separate steps'})
+            if not args.lidar360:
+                set_pose(sim,p);obs=sim.get_sensor_observations();depth=np.asarray(obs['depth']);points,valid=depth_to_lidar(depth,p,.3,.3)
+            else:
+                # Four 90-degree sectors provide scan overlap in rooms where a
+                # single 90-degree RGB-D view sees mostly a nearby wall.  Eight
+                # vertical rows per sector keep exactly 32 FAST-LIO rings.
+                base=Rotation.from_quat(p['rotation_xyzw']); chunks=[]
+                for yaw in (0.,90.,180.,270.):
+                    q=(base*Rotation.from_euler('y',yaw,degrees=True)).as_quat(); pp=dict(p); pp['rotation_xyzw']=q.tolist()
+                    set_pose(sim,pp); depth=np.asarray(sim.get_sensor_observations()['depth']); part,_=depth_to_lidar(depth,pp,.3,.3,rows=8,cols=512); chunks.append(part)
+                # Depth validity is per pixel, so each sector has a variable
+                # number of returns.  Keep sector-major order; the ROS2 writer
+                # assigns deterministic synthetic rings to the resulting scan.
+                points=np.concatenate(chunks,axis=0)
+            np.savez_compressed(args.output/'lidar'/f'{p["index"]:06d}.npz',timestamp=p['timestamp'],points_body=points)
+    imu=imu_from_trajectory(poses,dt);np.savez_compressed(args.output/'imu.npz',**imu);dump(args.output/'ground-truth-poses.json',{'poses':poses,'camera':design['camera'],'source':'Habitat simulator ground truth'});dump(args.output/'manifest.json',{'room':args.room,'frames':len(poses),'dt_s':dt,'motion_spacing_m':args.spacing,'motion_profile':'dense piecewise SLERP/linear interpolation' if args.fastlio else 'piecewise SLERP/linear interpolation','axis_transform_habitat_to_fastlio':HABITAT_TO_FASTLIO.tolist(),'lidar_origin':'camera optical center','lidar_sectors':4 if args.lidar360 else 1,'lidar_to_imu_extrinsic_fastlio_m':[0.3,0.0,0.3],'lidar_points_per_frame':'variable from valid depth rays','lidar_frame':'FAST-LIO Velodyne convention (forward,left,up)','imu_frame':'FAST-LIO body convention (forward,left,up)','fastlio_ready':False,'reason':'ROS message conversion and FAST-LIO replay are separate steps'})
     print(f'Generated room {args.room}: {len(poses)} synchronized frames at {args.output}',flush=True)
 
 if __name__=='__main__':main()

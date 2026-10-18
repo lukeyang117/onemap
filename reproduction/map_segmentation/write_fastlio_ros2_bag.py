@@ -22,6 +22,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", type=Path, required=True)
     ap.add_argument("--output", type=Path, required=True)
+    ap.add_argument("--scan-lines", type=int, default=32)
     args = ap.parse_args()
     ts = get_typestore(Stores.ROS2_HUMBLE)
     T = ts.types
@@ -55,7 +56,7 @@ def main():
             raw[:, 8:12] = np.ascontiguousarray(pts[:, 2]).view(np.uint8).reshape(n, 4)
             raw[:, 16:20] = np.ones(n, np.float32).view(np.uint8).reshape(n, 4)
             raw[:, 20:24] = rel.view(np.uint8).reshape(n, 4)
-            raw[:, 24:26] = ((np.arange(n, dtype=np.uint16) // (n // 32)) % 32).view(np.uint8).reshape(n, 2)
+            raw[:, 24:26] = ((np.arange(n, dtype=np.uint16) // (n // args.scan_lines)) % args.scan_lines).view(np.uint8).reshape(n, 2)
             msg = PC(
                 Header(ros_time(t, Time), "lidar"), 1, n,
                 [PF("x", 0, 7, 1), PF("y", 4, 7, 1), PF("z", 8, 7, 1),
@@ -71,7 +72,7 @@ def main():
         "input": str(args.input), "output": str(args.output), "frames": len(files),
         "ros_version": "ros2_humble", "storage": "sqlite3", "serialization": "cdr",
         "topics": {"lidar": "/fastlio/lidar", "imu": "/fastlio/imu"},
-        "point_fields": ["x", "y", "z", "intensity", "time", "ring"], "timestamp_unit": "second",
+        "point_fields": ["x", "y", "z", "intensity", "time", "ring"], "scan_lines": args.scan_lines, "timestamp_unit": "second",
     }
     args.output.with_suffix(".json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(json.dumps(manifest, indent=2))
