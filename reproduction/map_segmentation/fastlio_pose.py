@@ -71,9 +71,9 @@ def load_fastlio_poses(path, design):
         by_index[idx] = pose
     expected = [p["index"] for p in design["poses"] if p.get("split") == "mapping"]
     missing = sorted(set(expected) - set(by_index))
-    if missing:
+    if missing and not raw.get("allow_missing_views", False):
         raise ValueError(f"FAST-LIO pose file is missing mapping view indices: {missing}")
-    return [by_index[i] for i in expected]
+    return [by_index[i] for i in expected if i in by_index]
 
 
 def onemap_matrices(path, design):

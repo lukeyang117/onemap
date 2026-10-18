@@ -93,3 +93,67 @@ python reproduction/map_segmentation/write_fastlio_ros2_bag.py \
   --input /tmp/habitat-lio-room10 --output /tmp/habitat-lio-room10-ros2
 ros2 bag play /tmp/habitat-lio-room10-ros2
 ```
+
+## Randomized robustness evaluation (2026-10-18)
+
+The earlier 62–63% table above is retained as the historical `rayinst`
+experiment. The numbers below are a fresh rerun from the current FAST-LIO pose
+exports and are the values to use for robustness comparisons; the two result
+sets should not be mixed.
+
+The complete evaluation now uses the FAST-LIO pose JSON, ConvNeXt-L dense
+front-end classes, MobileSAM instance refinement, and the large > small >
+floor fusion rule. Ground-truth poses are not used by the mapper; GT is read
+only by the final semantic-elevation scorer. The mapper accepts a subset of
+the original view indices, so a dropped view cannot silently be paired with a
+different cached feature image.
+
+The clean full-map accuracies from the current reproducible raycast pose
+exports are Room 9 **56.74%** (coverage 84.68%, observed-region accuracy
+67.00%), Room 10 **52.30%** (93.82%, 55.74%), and Room 17 **46.62%** (80.33%,
+58.03%); pooled accuracy is **53.01%**. The first number counts every valid GT
+cell, including cells that the eight views did not cover. Coverage and
+observed-region accuracy are reported separately so pose/coverage failures are
+not confused with class errors.
+
+Randomized perturbations use one deterministic trial per condition in this
+smoke test: 5 cm translation plus 2° rotation noise, one randomly removed
+view, 10% depth dropout plus 1 cm depth noise, and the same RGB-D corruption
+with RGB gain jitter. Room 10 baseline scores are 52.30% clean, 50.86% under
+pose jitter, 52.74% with one view removed, 52.27% under depth corruption, and
+52.47% under combined RGB-D corruption. Room 9 scores are 56.74%, 60.32%, and
+57.47% for clean, pose jitter, and depth corruption; Room 17 scores are
+46.62%, 46.74%, and 47.00% for the same three conditions. A single trial is a
+diagnostic, not a confidence interval; use `--trials 3` or more before making
+statistical claims.
+
+The new self-consistency gate compares each view's projected coarse semantic
+labels with the other views, without GT. It only activates when the
+consistency distribution has a high median and a clear low tail, avoiding
+coverage loss in globally inconsistent rooms. It keeps views 0, 1, 2, 5, 6,
+7 in Room 10 and raises clean accuracy to **56.07%**; Room 9 and Room 17 keep
+all eight views at 56.74% and 46.62%. In Room 10 the adaptive-gate robustness
+scores are 56.07% clean, 55.24% pose jitter, 55.51% one-view drop, 56.09%
+depth corruption, and 56.26% combined RGB-D corruption.
+
+The per-view ablation found a real failure mode: Room 10 accuracy is 55.79%
+without view 4, 48.86% without view 7, and 49.31% without view 2. This is why
+the gate is relative and conservative rather than a fixed “always drop two
+views” rule. Repeated ablations show that fixed view removal harms Room 9 and
+Room 17.
+
+Re-run the tests with:
+
+```bash
+python reproduction/map_segmentation/run_3d_instance_pose_eval.py \
+  --base /path/to/rayinst-all --out /tmp/one-map-result --rooms 10 \
+  --adaptive-consistency
+python reproduction/map_segmentation/robustness_instance_eval.py \
+  --base /path/to/rayinst-all --pose-file /tmp/rayroom10-fastlio8.json \
+  --room 10 --out /tmp/robust --trials 3 --adaptive-consistency
+```
+
+Machine-readable results and figures are in
+`fastlio_results/robustness-summary.json`,
+`fastlio_results/robustness-clean-comparison.png`, and
+`fastlio_results/robustness-room10-conditions.png`.

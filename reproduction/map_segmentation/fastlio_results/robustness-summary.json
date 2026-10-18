@@ -1,0 +1,267 @@
+{
+  "protocol": {
+    "views": 8,
+    "pose_source": "FAST-LIO estimated pose JSON; no GT pose used for mapping",
+    "conditions": [
+      "clean",
+      "pose-jitter: translation sigma 0.05 m, rotation sigma 2 deg",
+      "one-view-drop: one random mapping view removed",
+      "depth-corrupt: 10% depth dropout + 1 cm Gaussian noise",
+      "rgbd-corrupt: above plus RGB gain jitter"
+    ]
+  },
+  "clean_baseline": {
+    "room-09": {
+      "accuracy_percent": 56.736131493982974,
+      "coverage_percent": 84.67860287643087,
+      "observed_accuracy_percent": 67.00173310225303
+    },
+    "room-10": {
+      "accuracy_percent": 52.29916897506925,
+      "coverage_percent": 93.82271468144044,
+      "observed_accuracy_percent": 55.74254502509596
+    },
+    "room-17": {
+      "accuracy_percent": 46.61606578115117,
+      "coverage_percent": 80.32890575585073,
+      "observed_accuracy_percent": 58.031496062992126
+    },
+    "pooled_accuracy_percent": 53.01232844847639
+  },
+  "clean_adaptive_consistency": {
+    "room-09": {
+      "accuracy_percent": 56.736131493982974,
+      "kept_views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "room-10": {
+      "accuracy_percent": 56.066481994459835,
+      "kept_views": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        7
+      ]
+    },
+    "room-17": {
+      "accuracy_percent": 46.61606578115117,
+      "kept_views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "pooled_accuracy_percent": 54.59409164922074
+  },
+  "adaptive_room10_robustness": [
+    {
+      "room": 10,
+      "condition": "clean",
+      "trial": 0,
+      "accuracy_percent": 56.066481994459835,
+      "observed_accuracy_percent": 62.81812538795779,
+      "coverage_percent": 89.25207756232687,
+      "height_MAE_cm": 94.06144341233502,
+      "small_recall_percent": 4.545454545454546,
+      "small_precision_percent": 1.7241379310344827,
+      "large_recall_percent": 65.0103519668737
+    },
+    {
+      "room": 10,
+      "condition": "pose-jitter",
+      "trial": 0,
+      "accuracy_percent": 55.23545706371191,
+      "observed_accuracy_percent": 61.48627813752698,
+      "coverage_percent": 89.83379501385042,
+      "height_MAE_cm": 100.32714600403905,
+      "small_recall_percent": 9.090909090909092,
+      "small_precision_percent": 6.666666666666667,
+      "large_recall_percent": 61.55969634230504
+    },
+    {
+      "room": 10,
+      "condition": "one-view-drop",
+      "trial": 0,
+      "accuracy_percent": 55.51246537396122,
+      "observed_accuracy_percent": 63.1578947368421,
+      "coverage_percent": 87.89473684210526,
+      "height_MAE_cm": 121.10688414638263,
+      "small_recall_percent": 4.545454545454546,
+      "small_precision_percent": 2.6315789473684212,
+      "large_recall_percent": 67.28778467908903
+    },
+    {
+      "room": 10,
+      "condition": "depth-corrupt",
+      "trial": 0,
+      "accuracy_percent": 56.094182825484765,
+      "observed_accuracy_percent": 62.00244947948561,
+      "coverage_percent": 90.47091412742382,
+      "height_MAE_cm": 100.10769702303853,
+      "small_recall_percent": 4.545454545454546,
+      "small_precision_percent": 1.7241379310344827,
+      "large_recall_percent": 67.21877156659765
+    },
+    {
+      "room": 10,
+      "condition": "rgbd-corrupt",
+      "trial": 0,
+      "accuracy_percent": 56.26038781163435,
+      "observed_accuracy_percent": 62.3963133640553,
+      "coverage_percent": 90.16620498614958,
+      "height_MAE_cm": 101.45627113130995,
+      "small_recall_percent": 4.545454545454546,
+      "small_precision_percent": 1.8867924528301887,
+      "large_recall_percent": 68.59903381642512
+    }
+  ],
+  "baseline_room09_robustness": [
+    {
+      "room": 9,
+      "condition": "clean",
+      "trial": 0,
+      "accuracy_percent": 56.736131493982974,
+      "observed_accuracy_percent": 67.00173310225303,
+      "coverage_percent": 84.67860287643087,
+      "height_MAE_cm": 133.2436574418567,
+      "small_recall_percent": null,
+      "small_precision_percent": null,
+      "large_recall_percent": 73.78836833602585
+    },
+    {
+      "room": 9,
+      "condition": "pose-jitter",
+      "trial": 0,
+      "accuracy_percent": 60.31699442324626,
+      "observed_accuracy_percent": 69.68463886063073,
+      "coverage_percent": 86.55708834751981,
+      "height_MAE_cm": 127.8344820696319,
+      "small_recall_percent": null,
+      "small_precision_percent": 0.0,
+      "large_recall_percent": 77.86752827140549
+    },
+    {
+      "room": 9,
+      "condition": "depth-corrupt",
+      "trial": 0,
+      "accuracy_percent": 57.46991488112709,
+      "observed_accuracy_percent": 67.33149931224209,
+      "coverage_percent": 85.35368359260346,
+      "height_MAE_cm": 131.26048257952456,
+      "small_recall_percent": null,
+      "small_precision_percent": null,
+      "large_recall_percent": 74.83844911147011
+    }
+  ],
+  "baseline_room17_robustness": [
+    {
+      "room": 17,
+      "condition": "clean",
+      "trial": 0,
+      "accuracy_percent": 46.61606578115117,
+      "observed_accuracy_percent": 58.031496062992126,
+      "coverage_percent": 80.32890575585073,
+      "height_MAE_cm": 88.35696951825265,
+      "small_recall_percent": 0.0,
+      "small_precision_percent": 0.0,
+      "large_recall_percent": 56.808803301237965
+    },
+    {
+      "room": 17,
+      "condition": "pose-jitter",
+      "trial": 0,
+      "accuracy_percent": 46.74256799493991,
+      "observed_accuracy_percent": 58.65079365079365,
+      "coverage_percent": 79.69639468690703,
+      "height_MAE_cm": 90.51427524866615,
+      "small_recall_percent": 4.166666666666667,
+      "small_precision_percent": 16.666666666666668,
+      "large_recall_percent": 56.946354883081156
+    },
+    {
+      "room": 17,
+      "condition": "depth-corrupt",
+      "trial": 0,
+      "accuracy_percent": 46.99557242251739,
+      "observed_accuracy_percent": 58.1832419733751,
+      "coverage_percent": 80.77166350411132,
+      "height_MAE_cm": 88.20238835919272,
+      "small_recall_percent": 0.0,
+      "small_precision_percent": 0.0,
+      "large_recall_percent": 59.422283356258596
+    }
+  ],
+  "room10_view_ablation": [
+    {
+      "removed_view": 0,
+      "accuracy_percent": 54.2382271468144,
+      "coverage_percent": 91.41274238227147,
+      "small_recall_percent": 4.545454545454546,
+      "large_recall_percent": 73.2919254658385
+    },
+    {
+      "removed_view": 1,
+      "accuracy_percent": 55.069252077562325,
+      "coverage_percent": 93.26869806094183,
+      "small_recall_percent": 4.545454545454546,
+      "large_recall_percent": 67.83988957902001
+    },
+    {
+      "removed_view": 2,
+      "accuracy_percent": 49.307479224376735,
+      "coverage_percent": 89.50138504155125,
+      "small_recall_percent": 4.545454545454546,
+      "large_recall_percent": 56.86680469289165
+    },
+    {
+      "removed_view": 3,
+      "accuracy_percent": 54.43213296398892,
+      "coverage_percent": 92.18836565096953,
+      "small_recall_percent": 4.545454545454546,
+      "large_recall_percent": 71.42857142857143
+    },
+    {
+      "removed_view": 4,
+      "accuracy_percent": 55.78947368421053,
+      "coverage_percent": 93.29639889196676,
+      "small_recall_percent": 4.545454545454546,
+      "large_recall_percent": 68.80607315389923
+    },
+    {
+      "removed_view": 5,
+      "accuracy_percent": 52.686980609418285,
+      "coverage_percent": 93.10249307479225,
+      "small_recall_percent": 0.0,
+      "large_recall_percent": 71.4975845410628
+    },
+    {
+      "removed_view": 6,
+      "accuracy_percent": 54.016620498614955,
+      "coverage_percent": 93.85041551246537,
+      "small_recall_percent": 0.0,
+      "large_recall_percent": 72.8088336783989
+    },
+    {
+      "removed_view": 7,
+      "accuracy_percent": 48.86426592797784,
+      "coverage_percent": 88.08864265927978,
+      "small_recall_percent": 0.0,
+      "large_recall_percent": 63.216011042097996
+    }
+  ]
+}
