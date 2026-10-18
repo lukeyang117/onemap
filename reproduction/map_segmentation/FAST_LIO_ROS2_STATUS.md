@@ -79,6 +79,11 @@ production-style three-room result is:
 No ICP or simulator pose replaces FAST-LIO in this result. The final report is
 `fastlio_results/summary-fastlio-mobilesam.json`.
 
+Adding a two-view support gate for small SAM instances reduces single-view
+false positives. The updated pooled accuracy is **63.18%**: Room 9 65.37%,
+Room 10 68.37%, and Room 17 46.62%. The updated report is
+`fastlio_results/summary-fastlio-mobilesam-consistent.json`.
+
 Example:
 
 ```bash
