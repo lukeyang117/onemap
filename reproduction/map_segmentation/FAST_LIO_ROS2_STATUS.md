@@ -65,6 +65,20 @@ agreement reaches 49.14%. Small-object agreement remains 0/22 in Room 10 and
 coverage rather than another pose-axis change. See
 `fastlio_results/summary-axis-corrected.json` for the per-class counts.
 
+The final raycast correction uses the transpose for FAST-LIO-to-Habitat ray
+directions. With pure FAST-LIO Odometry and MobileSAM instance refinement, the
+production-style three-room result is:
+
+| room | semantic accuracy | small-object recall |
+| --- | ---: | ---: |
+| Room 9 | 63.02% | no small-object GT |
+| Room 10 | 68.25% | 31.82% |
+| Room 17 | 45.60% | 16.67% |
+| pooled | **62.01%** | — |
+
+No ICP or simulator pose replaces FAST-LIO in this result. The final report is
+`fastlio_results/summary-fastlio-mobilesam.json`.
+
 Example:
 
 ```bash
