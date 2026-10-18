@@ -163,3 +163,39 @@ Machine-readable results and figures are in
 `fastlio_results/robustness-summary.json`,
 `fastlio_results/robustness-clean-comparison.png`, and
 `fastlio_results/robustness-room10-conditions.png`.
+
+## Module ablation and current improvement path (2026-10-19)
+
+The pipeline was ablated on the same Room 10 FAST-LIO pose sequence. The
+complete chain scores 52.30%. Removing MobileSAM changes it to 52.41%, while
+allowing single-view small-instance writes changes it to 52.52% but leaves
+small-object precision at only 5.03%. Disabling the 3-D instance overwrite is
+better: 54.90% overall and 22.73% small-object recall. Adding the relative
+cross-view consistency gate gives 59.20%. Raising the large-class evidence
+fraction to 0.9 gives 60.36%. A 5 cm floor prior gives 63.30% in Room 10, but
+it is unsafe as a fixed rule: Room 9 falls to 37.36% because its FAST-LIO
+height alignment is different.
+
+The deployable version therefore enables the floor prior only when the
+projected frontend labels contain enough floor evidence, and only uses the
+large fraction 0.9 when the consistency gate actually removes a low-tail
+view. With this conditional policy, the current three-room results are Room 9
+54.53%, Room 10 63.30%, Room 17 47.56%, pooled **56.93%**. Room 9 and Room 17
+retain the original large evidence fraction and all eight views.
+
+Two oracle diagnostics locate the remaining ceiling. With GT poses but the
+current ConvNeXt-L semantic labels, the no-instance map reaches 67.52% pooled.
+With GT poses and per-view GT semantic labels, it reaches 85.23% pooled. Thus
+80% is geometrically possible, but the current 2-D semantic front end and
+FAST-LIO pose drift must both improve; changing serialization or adding more
+SAM overwrite is not sufficient. The full table is in
+`fastlio_results/module-ablation-summary.json`, with a chart in
+`fastlio_results/module-ablation-room10.png`.
+
+The recommended combination is available as one switch:
+
+```bash
+python reproduction/map_segmentation/run_3d_instance_pose_eval.py \
+  --base /path/to/rayinst-all --out /tmp/robust-map \
+  --rooms 10 --robust-fusion
+```

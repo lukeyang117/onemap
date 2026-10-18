@@ -14,7 +14,10 @@ from score_voxel_map import depth_points
 from score_saved import grid_indices
 from analyze_small_objects import dense_labels,depth_weights
 
-ap=argparse.ArgumentParser();ap.add_argument('--base',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--rooms',type=int,nargs='+',default=[10,9,17],help='room ids to evaluate');ap.add_argument('--consistency-threshold',type=float,default=0.0,help='drop views whose non-GT semantic agreement with other views is below this value');ap.add_argument('--drop-lowest',type=int,default=0,help='drop this many lowest-consistency views (relative, no GT)');ap.add_argument('--adaptive-consistency',action='store_true',help='gate only when the view-consistency distribution has a reliable high-consistency cluster');args=ap.parse_args();BASE=args.base;OUT=args.out;OUT.mkdir(parents=True,exist_ok=True);N=600
+ap=argparse.ArgumentParser();ap.add_argument('--base',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--rooms',type=int,nargs='+',default=[10,9,17],help='room ids to evaluate');ap.add_argument('--consistency-threshold',type=float,default=0.0,help='drop views whose non-GT semantic agreement with other views is below this value');ap.add_argument('--drop-lowest',type=int,default=0,help='drop this many lowest-consistency views (relative, no GT)');ap.add_argument('--adaptive-consistency',action='store_true',help='gate only when the view-consistency distribution has a reliable high-consistency cluster');ap.add_argument('--no-sam',action='store_true',help='ablation: use ConvNeXt-L frontend labels without MobileSAM refinement');ap.add_argument('--small-support-views',type=int,default=2,help='minimum number of supporting views for a small 3-D instance');ap.add_argument('--no-instance-fusion',action='store_true',help='ablation: disable 3-D instance proposals after semantic projection');ap.add_argument('--semantic-source',choices=['frontend','gt'],default='frontend',help='diagnostic only: use cached ConvNeXt-L labels or per-view semantic GT labels');ap.add_argument('--min-floor-views',type=int,default=1);ap.add_argument('--min-small-views',type=int,default=1);ap.add_argument('--min-large-views',type=int,default=1);ap.add_argument('--floor-fraction',type=float,default=.45);ap.add_argument('--small-fraction',type=float,default=.45);ap.add_argument('--large-fraction',type=float,default=.60);ap.add_argument('--large-fraction-auto',action='store_true',help='use the tuned large threshold only when the consistency gate actually removes views');ap.add_argument('--floor-height-threshold',type=float,default=0.0,help='optional geometric floor prior in metres above the room datum');ap.add_argument('--floor-prior-classes',choices=['all','large'],default='all',help='classes affected by the optional floor prior');ap.add_argument('--floor-prior-auto',action='store_true',help='enable floor prior only when the projected frontend has enough floor evidence');ap.add_argument('--floor-prior-min-ratio',type=float,default=.42);ap.add_argument('--robust-fusion',action='store_true',help='recommended deployable fusion: disable instance overwrite, gate views, and enable conditional geometry priors');args=ap.parse_args();
+if args.robust_fusion:
+ args.no_instance_fusion=True;args.adaptive_consistency=True;args.large_fraction=.9;args.large_fraction_auto=True;args.floor_height_threshold=.05;args.floor_prior_auto=True
+BASE=args.base;OUT=args.out;OUT.mkdir(parents=True,exist_ok=True);N=600
 
 def score(gt,pred,gh,hp,valid):
  cm=np.zeros((4,4),int);np.add.at(cm,(gt[valid],pred[valid]),1); rows=[]
@@ -29,7 +32,15 @@ def run(room):
   from fastlio_pose import load_fastlio_poses; poses=load_fastlio_poses(p/'fastlio-poses.json',d)
  state=torch.load(p/'augmented/saved-map.pt',map_location='cpu',weights_only=True);feats=torch.load(ROOT/f'reproduction/map_segmentation/multi_room/small_object_analysis/room-{room:02d}/cached-dense-features.pt',map_location='cpu',weights_only=True)
  lut=np.full(44,3,np.uint8);lut[[1,15]]=1;lut[40:43]=2;lut[16]=4;lut[43]=0
- predictor=SamPredictor(sam_model_registry['vit_t'](checkpoint=str(ROOT/'weights/mobile_sam.pt')).cuda().eval())
+ floor_ratio_samples=[]
+ if args.floor_prior_auto and args.floor_height_threshold>0:
+  for q in poses:
+   vv=int(q['index'])
+   if args.semantic_source=='gt': ff=np.asarray(Image.open(p/f'augmented/view-{vv:02d}-gt.png')).copy();ff[ff>=44]=43
+   else: ff=np.asarray(Image.open(ROOT/f'reproduction/map_segmentation/multi_room/small_object_analysis/room-{room:02d}'/f'view-{vv:02d}-frontend-classes.png'))
+   floor_ratio_samples.append(float(np.mean(lut[ff]==1)))
+ floor_prior_enabled=args.floor_height_threshold>0 and (not args.floor_prior_auto or float(np.mean(floor_ratio_samples))>=args.floor_prior_min_ratio)
+ predictor=None if args.no_sam else SamPredictor(sam_model_registry['vit_t'](checkpoint=str(ROOT/'weights/mobile_sam.pt')).cuda().eval())
  cnt=np.zeros((8,N,N,4),np.uint16); covered=np.zeros((N,N),bool); hmax_views=np.full((8,N,N),-np.inf,np.float32); components=[]
  for pose in poses:
   # The cached frontend features are indexed by the original view id.  Using
@@ -37,17 +48,25 @@ def run(room):
   # view sets without silently pairing a pose with the wrong image features.
   feat=feats[int(pose['index'])]
   v=pose['index']; dep=np.load(p/f'augmented/view-{v:02d}-geometry.npz')['depth'];good=(dep>0)&np.isfinite(dep)
-  arch=np.asarray(Image.open(ROOT/f'reproduction/map_segmentation/multi_room/small_object_analysis/room-{room:02d}'/f'view-{v:02d}-frontend-classes.png')); fine=arch.copy()
-  rgb=np.asarray(Image.open(p/f'augmented/view-{v:02d}-rgb.png'))[:,:,:3];predictor.set_image(rgb)
-  seed=((fine>=40)&(fine<=42)).astype(np.uint8);num,comp,stats,_=cv2.connectedComponentsWithStats(seed,8)
-  for ci in range(1,num):
-   x,y,w,h,a=stats[ci]
-   if a<3:continue
-   box=np.array([max(0,x-2),max(0,y-2),min(639,x+w+2),min(639,y+h+2)],np.float32);masks,_,_=predictor.predict(box=box[None],multimask_output=False);m=masks[0]
-   if (m&(comp==ci)).sum()<2:continue
-   region=m&(cv2.dilate((comp==ci).astype(np.uint8),np.ones((9,9),np.uint8))>0);fine[region]=int(np.bincount(fine[comp==ci],minlength=44).argmax())
-  pts=depth_points(dep,pose);world=pts[good];lab=lut[fine[good]];wgt=depth_weights(dep,state['mapping_config'])[good];i,j=grid_indices(world[:,0],world[:,2],state);inside=(i>=0)&(i<N)&(j>=0)&(j<N)&(lab>=1)&(lab<=3)&(wgt>1e-5);i=i[inside];j=j[inside];lab=lab[inside];world=world[inside];np.add.at(cnt[v],(i,j,lab),1);np.maximum.at(hmax_views[v],(i,j),world[:,1]-d['floor_y']);covered[i,j]=True
+  if args.semantic_source=='gt': fine=np.asarray(Image.open(p/f'augmented/view-{v:02d}-gt.png')).copy(); fine[fine>=44]=43
+  else: arch=np.asarray(Image.open(ROOT/f'reproduction/map_segmentation/multi_room/small_object_analysis/room-{room:02d}'/f'view-{v:02d}-frontend-classes.png')); fine=arch.copy()
+  if predictor is not None:
+   rgb=np.asarray(Image.open(p/f'augmented/view-{v:02d}-rgb.png'))[:,:,:3];predictor.set_image(rgb)
+   seed=((fine>=40)&(fine<=42)).astype(np.uint8);num,comp,stats,_=cv2.connectedComponentsWithStats(seed,8)
+   for ci in range(1,num):
+    x,y,w,h,a=stats[ci]
+    if a<3:continue
+    box=np.array([max(0,x-2),max(0,y-2),min(639,x+w+2),min(639,y+h+2)],np.float32);masks,_,_=predictor.predict(box=box[None],multimask_output=False);m=masks[0]
+    if (m&(comp==ci)).sum()<2:continue
+    region=m&(cv2.dilate((comp==ci).astype(np.uint8),np.ones((9,9),np.uint8))>0);fine[region]=int(np.bincount(fine[comp==ci],minlength=44).argmax())
+  pts=depth_points(dep,pose);world=pts[good];lab=lut[fine[good]]
+  if floor_prior_enabled:
+   floor_mask=world[:,1]-d['floor_y']<=args.floor_height_threshold
+   if args.floor_prior_classes=='large': floor_mask &= lab==3
+   lab[floor_mask]=1
+  wgt=depth_weights(dep,state['mapping_config'])[good];i,j=grid_indices(world[:,0],world[:,2],state);inside=(i>=0)&(i<N)&(j>=0)&(j<N)&(lab>=1)&(lab<=3)&(wgt>1e-5);i=i[inside];j=j[inside];lab=lab[inside];world=world[inside];np.add.at(cnt[v],(i,j,lab),1);np.maximum.at(hmax_views[v],(i,j),world[:,1]-d['floor_y']);covered[i,j]=True
   # 3-D proposal components from refined small mask.
+  if args.no_instance_fusion: continue
   small=(fine>=40)&(fine<=42);num,cc,st,_=cv2.connectedComponentsWithStats(small.astype(np.uint8),8)
   for ci in range(1,num):
    yy,xx=np.where(cc==ci)
@@ -70,7 +89,9 @@ def run(room):
   if median>=0.62 and gap>=0.05:
    keep=[v for v in active if v not in set(ranked[:2])]
  if not keep: keep=active
- fused_cnt=cnt[keep].sum(0);view_cnt=cnt[keep][:,:,:,1:4];view_total=view_cnt.sum(-1);view_frac=np.divide(view_cnt,view_total[:,:,:,None],out=np.zeros_like(view_cnt,np.float32),where=view_total[:,:,:,None]>0);support=(view_frac>=np.array([.45,.45,.60])[None,None,None,:]).sum(0);cand=np.zeros((N,N,3),bool);cand[:,:,0]=fused_cnt[:,:,1:4].sum(-1)>0;cand[:,:,1:]=support[:,:,1:]>=1;pred=np.max(cand*np.array([1,2,3],np.uint8),-1).astype(np.uint8);hp=np.max(hmax_views[keep],axis=0);hp[pred==0]=np.nan
+ large_fraction_used=args.large_fraction
+ if args.large_fraction_auto and len(keep)==len(active): large_fraction_used=.60
+ fused_cnt=cnt[keep].sum(0);view_cnt=cnt[keep][:,:,:,1:4];view_total=view_cnt.sum(-1);view_frac=np.divide(view_cnt,view_total[:,:,:,None],out=np.zeros_like(view_cnt,np.float32),where=view_total[:,:,:,None]>0);support=(view_frac>=np.array([args.floor_fraction,args.small_fraction,large_fraction_used])[None,None,None,:]).sum(0);cand=np.zeros((N,N,3),bool);cand[:,:,0]=fused_cnt[:,:,1:4].sum(-1)>0;cand[:,:,1:]=support[:,:,1:]>=np.array([args.min_small_views,args.min_large_views])[None,None,:];pred=np.max(cand*np.array([1,2,3],np.uint8),-1).astype(np.uint8);hp=np.max(hmax_views[keep],axis=0);hp[pred==0]=np.nan
  # Associate proposals by 3-D centroid, collect labels and rasterize their projected points.
  clusters=[]
  for q in components:
@@ -87,8 +108,8 @@ def run(room):
    # large evidence retains priority; otherwise the 3-D instance writes small.
    # Require cross-view support for small instances.  A single SAM proposal
    # is kept as evidence but cannot overwrite the fused semantic grid.
-   if coarse==2 and len(c['items'])>=2: pred[ii,jj]=np.maximum(pred[ii,jj],2)
+   if coarse==2 and len(c['items'])>=args.small_support_views: pred[ii,jj]=np.maximum(pred[ii,jj],2)
    else: pred[ii,jj]=3
- old=np.load(p/'semantic_elevation/maps.npz');valid_gt=old['valid_GT'];rep=score(old['GT_semantic'],pred,old['GT_height'],hp,valid_gt);covered_valid=(pred>0)&valid_gt;observed=score(old['GT_semantic'],pred,old['GT_height'],hp,covered_valid) if covered_valid.any() else None;rep.update({'room':room,'instances':len(clusters),'proposals':len(components),'sam':True,'priority':'large > small > floor','coverage_percent':100*float(covered_valid.sum())/float(valid_gt.sum()) if valid_gt.any() else 0.0,'observed_accuracy':None if observed is None else observed['accuracy'],'observed_GT':0 if observed is None else observed['GT'],'view_consistency':view_consistency,'kept_views':keep,'consistency_threshold':args.consistency_threshold});dump(OUT/f'room-{room:02d}.json',rep);np.savez_compressed(OUT/f'room-{room:02d}.npz',GT=old['GT_semantic'],valid=valid_gt,pred=pred,GT_height=old['GT_height'],pred_height=hp,covered=covered_valid);return rep
+ old=np.load(p/'semantic_elevation/maps.npz');valid_gt=old['valid_GT'];rep=score(old['GT_semantic'],pred,old['GT_height'],hp,valid_gt);covered_valid=(pred>0)&valid_gt;observed=score(old['GT_semantic'],pred,old['GT_height'],hp,covered_valid) if covered_valid.any() else None;rep.update({'room':room,'instances':len(clusters),'proposals':len(components),'sam':not args.no_sam,'semantic_source':args.semantic_source,'priority':'large > small > floor','small_support_views':args.small_support_views,'min_support_views':[args.min_floor_views,args.min_small_views,args.min_large_views],'large_fraction_used':large_fraction_used,'instance_fusion':not args.no_instance_fusion,'floor_prior_enabled':floor_prior_enabled,'floor_ratio_mean':None if not floor_ratio_samples else float(np.mean(floor_ratio_samples)),'coverage_percent':100*float(covered_valid.sum())/float(valid_gt.sum()) if valid_gt.any() else 0.0,'observed_accuracy':None if observed is None else observed['accuracy'],'observed_GT':0 if observed is None else observed['GT'],'view_consistency':view_consistency,'kept_views':keep,'consistency_threshold':args.consistency_threshold});dump(OUT/f'room-{room:02d}.json',rep);np.savez_compressed(OUT/f'room-{room:02d}.npz',GT=old['GT_semantic'],valid=valid_gt,pred=pred,GT_height=old['GT_height'],pred_height=hp,covered=covered_valid);return rep
 
 reports=[run(r) for r in args.rooms];gt=sum(x['GT'] for x in reports);summary={'rooms':reports,'pooled_accuracy':100*sum(x['correct'] for x in reports)/gt,'GT':gt,'correct':sum(x['correct'] for x in reports)};dump(OUT/'summary.json',summary);print(json.dumps(summary,indent=2))

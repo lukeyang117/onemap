@@ -1,0 +1,1406 @@
+{
+  "protocol": {
+    "mapping_pose": "FAST-LIO estimate for production rows; GT pose only in oracle diagnostics",
+    "gt_usage": "GT is used only by scorer; oracle rows are diagnostic upper bounds"
+  },
+  "room10_module_ablation": [
+    {
+      "name": "full pipeline",
+      "room": 10,
+      "accuracy_percent": 52.29916897506925,
+      "observed_accuracy_percent": 55.74254502509596,
+      "coverage_percent": 93.82271468144044,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 827,
+          "predicted": 1062,
+          "recall": 38.662926601215524,
+          "precision": 77.87193973634652
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 1,
+          "predicted": 46,
+          "recall": 4.545454545454546,
+          "precision": 2.1739130434782608
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 1060,
+          "predicted": 2279,
+          "recall": 73.15389924085576,
+          "precision": 46.51162790697674
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": null,
+        "instance_fusion": true,
+        "small_support_views": 2,
+        "large_fraction_used": null,
+        "floor_prior_enabled": null,
+        "floor_ratio_mean": null,
+        "kept_views": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "name": "no MobileSAM",
+      "room": 10,
+      "accuracy_percent": 52.40997229916898,
+      "observed_accuracy_percent": 55.86064363743726,
+      "coverage_percent": 93.82271468144044,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 833,
+          "predicted": 1070,
+          "recall": 38.943431510051425,
+          "precision": 77.85046728971963
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 0,
+          "predicted": 32,
+          "recall": 0.0,
+          "precision": 0.0
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 1059,
+          "predicted": 2285,
+          "recall": 73.08488612836439,
+          "precision": 46.34573304157549
+        }
+      ],
+      "config": {
+        "sam": false,
+        "semantic_source": null,
+        "instance_fusion": true,
+        "small_support_views": 2,
+        "large_fraction_used": null,
+        "floor_prior_enabled": null,
+        "floor_ratio_mean": null,
+        "kept_views": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "name": "single-view small instance support",
+      "room": 10,
+      "accuracy_percent": 52.5207756232687,
+      "observed_accuracy_percent": 55.97874224977856,
+      "coverage_percent": 93.82271468144044,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 827,
+          "predicted": 1062,
+          "recall": 38.662926601215524,
+          "precision": 77.87193973634652
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 10,
+          "predicted": 199,
+          "recall": 45.45454545454545,
+          "precision": 5.025125628140704
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 1059,
+          "predicted": 2126,
+          "recall": 73.08488612836439,
+          "precision": 49.811853245531516
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": null,
+        "instance_fusion": true,
+        "small_support_views": 1,
+        "large_fraction_used": null,
+        "floor_prior_enabled": null,
+        "floor_ratio_mean": null,
+        "kept_views": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "name": "no 3D instance overwrite",
+      "room": 10,
+      "accuracy_percent": 54.903047091412745,
+      "observed_accuracy_percent": 58.517862415116625,
+      "coverage_percent": 93.82271468144044,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 918,
+          "predicted": 1159,
+          "recall": 42.91725105189341,
+          "precision": 79.20621225194132
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 5,
+          "predicted": 102,
+          "recall": 22.727272727272727,
+          "precision": 4.901960784313726
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 1059,
+          "predicted": 2126,
+          "recall": 73.08488612836439,
+          "precision": 49.811853245531516
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": null,
+        "instance_fusion": false,
+        "small_support_views": 2,
+        "large_fraction_used": null,
+        "floor_prior_enabled": null,
+        "floor_ratio_mean": null,
+        "kept_views": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "name": "no instance + adaptive view gate",
+      "room": 10,
+      "accuracy_percent": 59.19667590027701,
+      "observed_accuracy_percent": 66.32526381129733,
+      "coverage_percent": 89.25207756232687,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 1193,
+          "predicted": 1455,
+          "recall": 55.7737260402057,
+          "precision": 81.99312714776632
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 2,
+          "predicted": 86,
+          "recall": 9.090909090909092,
+          "precision": 2.3255813953488373
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 942,
+          "predicted": 1681,
+          "recall": 65.0103519668737,
+          "precision": 56.03807257584771
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": null,
+        "instance_fusion": false,
+        "small_support_views": 2,
+        "large_fraction_used": null,
+        "floor_prior_enabled": null,
+        "floor_ratio_mean": null,
+        "kept_views": [
+          0,
+          1,
+          2,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "name": "no instance + adaptive + large fraction 0.9",
+      "room": 10,
+      "accuracy_percent": 60.3601108033241,
+      "observed_accuracy_percent": 67.62880198634389,
+      "coverage_percent": 89.25207756232687,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 1393,
+          "predicted": 1813,
+          "recall": 65.1238896680692,
+          "precision": 76.83397683397683
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 2,
+          "predicted": 98,
+          "recall": 9.090909090909092,
+          "precision": 2.0408163265306123
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 784,
+          "predicted": 1311,
+          "recall": 54.106280193236714,
+          "precision": 59.80167810831426
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": "frontend",
+        "instance_fusion": false,
+        "small_support_views": 2,
+        "large_fraction_used": null,
+        "floor_prior_enabled": null,
+        "floor_ratio_mean": null,
+        "kept_views": [
+          0,
+          1,
+          2,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "name": "no instance + adaptive + floor prior 5 cm",
+      "room": 10,
+      "accuracy_percent": 63.29639889196676,
+      "observed_accuracy_percent": 70.91868404717567,
+      "coverage_percent": 89.25207756232687,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 1526,
+          "predicted": 1974,
+          "recall": 71.34174848059841,
+          "precision": 77.30496453900709
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 2,
+          "predicted": 53,
+          "recall": 9.090909090909092,
+          "precision": 3.7735849056603774
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 757,
+          "predicted": 1195,
+          "recall": 52.242926155969634,
+          "precision": 63.34728033472803
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": "frontend",
+        "instance_fusion": false,
+        "small_support_views": 2,
+        "large_fraction_used": null,
+        "floor_prior_enabled": null,
+        "floor_ratio_mean": null,
+        "kept_views": [
+          0,
+          1,
+          2,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "name": "auto deployable gate",
+      "room": 10,
+      "accuracy_percent": 63.29639889196676,
+      "observed_accuracy_percent": 70.91868404717567,
+      "coverage_percent": 89.25207756232687,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 1526,
+          "predicted": 1974,
+          "recall": 71.34174848059841,
+          "precision": 77.30496453900709
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 2,
+          "predicted": 53,
+          "recall": 9.090909090909092,
+          "precision": 3.7735849056603774
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 757,
+          "predicted": 1195,
+          "recall": 52.242926155969634,
+          "precision": 63.34728033472803
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": "frontend",
+        "instance_fusion": false,
+        "small_support_views": 2,
+        "large_fraction_used": 0.9,
+        "floor_prior_enabled": true,
+        "floor_ratio_mean": 0.44870147705078123,
+        "kept_views": [
+          0,
+          1,
+          2,
+          5,
+          6,
+          7
+        ]
+      }
+    }
+  ],
+  "auto_gate_three_rooms": {
+    "9": {
+      "name": "auto deployable gate",
+      "room": 9,
+      "accuracy_percent": 54.53478133255063,
+      "observed_accuracy_percent": 64.40207972270363,
+      "coverage_percent": 84.67860287643087,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 931,
+          "correct": 107,
+          "predicted": 479,
+          "recall": 11.493018259935553,
+          "precision": 22.338204592901878
+        },
+        {
+          "class": "small",
+          "gt": 0,
+          "correct": 0,
+          "predicted": 44,
+          "recall": null,
+          "precision": 0.0
+        },
+        {
+          "class": "large",
+          "gt": 2476,
+          "correct": 1751,
+          "predicted": 2362,
+          "recall": 70.718901453958,
+          "precision": 74.13209144792549
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": "frontend",
+        "instance_fusion": false,
+        "small_support_views": 2,
+        "large_fraction_used": 0.6,
+        "floor_prior_enabled": false,
+        "floor_ratio_mean": 0.3809060668945312,
+        "kept_views": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "10": {
+      "name": "auto deployable gate",
+      "room": 10,
+      "accuracy_percent": 63.29639889196676,
+      "observed_accuracy_percent": 70.91868404717567,
+      "coverage_percent": 89.25207756232687,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 2139,
+          "correct": 1526,
+          "predicted": 1974,
+          "recall": 71.34174848059841,
+          "precision": 77.30496453900709
+        },
+        {
+          "class": "small",
+          "gt": 22,
+          "correct": 2,
+          "predicted": 53,
+          "recall": 9.090909090909092,
+          "precision": 3.7735849056603774
+        },
+        {
+          "class": "large",
+          "gt": 1449,
+          "correct": 757,
+          "predicted": 1195,
+          "recall": 52.242926155969634,
+          "precision": 63.34728033472803
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": "frontend",
+        "instance_fusion": false,
+        "small_support_views": 2,
+        "large_fraction_used": 0.9,
+        "floor_prior_enabled": true,
+        "floor_ratio_mean": 0.44870147705078123,
+        "kept_views": [
+          0,
+          1,
+          2,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "17": {
+      "name": "auto deployable gate",
+      "room": 17,
+      "accuracy_percent": 47.56483238456673,
+      "observed_accuracy_percent": 59.21259842519685,
+      "coverage_percent": 80.32890575585073,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 830,
+          "correct": 357,
+          "predicted": 542,
+          "recall": 43.01204819277108,
+          "precision": 65.86715867158672
+        },
+        {
+          "class": "small",
+          "gt": 24,
+          "correct": 2,
+          "predicted": 37,
+          "recall": 8.333333333333334,
+          "precision": 5.405405405405405
+        },
+        {
+          "class": "large",
+          "gt": 727,
+          "correct": 393,
+          "predicted": 691,
+          "recall": 54.05777166437414,
+          "precision": 56.87409551374819
+        }
+      ],
+      "config": {
+        "sam": true,
+        "semantic_source": "frontend",
+        "instance_fusion": false,
+        "small_support_views": 2,
+        "large_fraction_used": 0.6,
+        "floor_prior_enabled": false,
+        "floor_ratio_mean": 0.30696929931640626,
+        "kept_views": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    }
+  },
+  "oracle_diagnostics": {
+    "GT_pose+ConvNeXt_frontend_no_instance": {
+      "rooms": [
+        {
+          "accuracy": 71.38504155124653,
+          "correct": 2577,
+          "GT": 3610,
+          "classes": [
+            {
+              "class": "floor",
+              "gt": 2139,
+              "correct": 1394,
+              "predicted": 1528,
+              "recall": 65.17064048620851,
+              "precision": 91.2303664921466
+            },
+            {
+              "class": "small",
+              "gt": 22,
+              "correct": 6,
+              "predicted": 123,
+              "recall": 27.272727272727273,
+              "precision": 4.878048780487805
+            },
+            {
+              "class": "large",
+              "gt": 1449,
+              "correct": 1177,
+              "predicted": 1775,
+              "recall": 81.22843340234644,
+              "precision": 66.30985915492958
+            }
+          ],
+          "height_MAE_cm": 59.190271420152065,
+          "cm": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              52,
+              1394,
+              110,
+              583
+            ],
+            [
+              0,
+              1,
+              6,
+              15
+            ],
+            [
+              132,
+              133,
+              7,
+              1177
+            ]
+          ],
+          "room": 10,
+          "instances": 0,
+          "proposals": 0,
+          "sam": true,
+          "priority": "large > small > floor",
+          "small_support_views": 2,
+          "instance_fusion": false,
+          "coverage_percent": 94.90304709141274,
+          "observed_accuracy": 75.21891418563924,
+          "observed_GT": 3426,
+          "view_consistency": {
+            "0": 0.7924528301886793,
+            "1": 0.7849223946784922,
+            "2": 0.8425110132158591,
+            "3": 0.7847854356306893,
+            "4": 0.840117994100295,
+            "5": 0.9026701119724375,
+            "6": 0.844,
+            "7": 0.8471295060080107
+          },
+          "kept_views": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "consistency_threshold": 0.0
+        },
+        {
+          "accuracy": 63.0173172879366,
+          "correct": 2147,
+          "GT": 3407,
+          "classes": [
+            {
+              "class": "floor",
+              "gt": 931,
+              "correct": 227,
+              "predicted": 609,
+              "recall": 24.382384532760472,
+              "precision": 37.274220032840724
+            },
+            {
+              "class": "small",
+              "gt": 0,
+              "correct": 0,
+              "predicted": 48,
+              "recall": null,
+              "precision": 0.0
+            },
+            {
+              "class": "large",
+              "gt": 2476,
+              "correct": 1920,
+              "predicted": 2487,
+              "recall": 77.54442649434571,
+              "precision": 77.20144752714113
+            }
+          ],
+          "height_MAE_cm": 117.48507911885862,
+          "cm": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              137,
+              227,
+              0,
+              567
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              126,
+              382,
+              48,
+              1920
+            ]
+          ],
+          "room": 9,
+          "instances": 0,
+          "proposals": 0,
+          "sam": true,
+          "priority": "large > small > floor",
+          "small_support_views": 2,
+          "instance_fusion": false,
+          "coverage_percent": 92.28059876724392,
+          "observed_accuracy": 68.28880407124682,
+          "observed_GT": 3144,
+          "view_consistency": {
+            "0": 0.687797147385103,
+            "1": 0.6985962014863749,
+            "2": 0.6137123745819398,
+            "3": 0.6422689844464776,
+            "4": 0.7166324435318275,
+            "5": 0.7318153067678684,
+            "6": 0.6559726962457337,
+            "7": 0.6611570247933884
+          },
+          "kept_views": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "consistency_threshold": 0.0
+        },
+        {
+          "accuracy": 68.37444655281467,
+          "correct": 1081,
+          "GT": 1581,
+          "classes": [
+            {
+              "class": "floor",
+              "gt": 830,
+              "correct": 500,
+              "predicted": 630,
+              "recall": 60.24096385542169,
+              "precision": 79.36507936507937
+            },
+            {
+              "class": "small",
+              "gt": 24,
+              "correct": 11,
+              "predicted": 54,
+              "recall": 45.833333333333336,
+              "precision": 20.37037037037037
+            },
+            {
+              "class": "large",
+              "gt": 727,
+              "correct": 570,
+              "predicted": 739,
+              "recall": 78.40440165061898,
+              "precision": 77.13125845737483
+            }
+          ],
+          "height_MAE_cm": 53.94944959911507,
+          "cm": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              140,
+              500,
+              31,
+              159
+            ],
+            [
+              0,
+              3,
+              11,
+              10
+            ],
+            [
+              18,
+              127,
+              12,
+              570
+            ]
+          ],
+          "room": 17,
+          "instances": 0,
+          "proposals": 0,
+          "sam": true,
+          "priority": "large > small > floor",
+          "small_support_views": 2,
+          "instance_fusion": false,
+          "coverage_percent": 90.00632511068943,
+          "observed_accuracy": 75.96626844694308,
+          "observed_GT": 1423,
+          "view_consistency": {
+            "0": 0.8534704370179949,
+            "1": 0.9045996592844975,
+            "2": 0.8948069241011984,
+            "3": 0.8267634854771784,
+            "4": 0.893048128342246,
+            "5": 0.7531707317073171,
+            "6": 0.7903225806451613,
+            "7": 0.9106699751861043
+          },
+          "kept_views": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "consistency_threshold": 0.0
+        }
+      ],
+      "pooled_accuracy": 67.51570132588974,
+      "GT": 8598,
+      "correct": 5805
+    },
+    "GT_pose+GT_semantic_no_instance": {
+      "rooms": [
+        {
+          "accuracy": 85.8448753462604,
+          "correct": 3099,
+          "GT": 3610,
+          "classes": [
+            {
+              "class": "floor",
+              "gt": 2139,
+              "correct": 1917,
+              "predicted": 2041,
+              "recall": 89.62131837307153,
+              "precision": 93.92454679078882
+            },
+            {
+              "class": "small",
+              "gt": 22,
+              "correct": 19,
+              "predicted": 19,
+              "recall": 86.36363636363636,
+              "precision": 100.0
+            },
+            {
+              "class": "large",
+              "gt": 1449,
+              "correct": 1163,
+              "predicted": 1283,
+              "recall": 80.26224982746722,
+              "precision": 90.6469212782541
+            }
+          ],
+          "height_MAE_cm": 32.390460350083764,
+          "cm": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              103,
+              1917,
+              0,
+              119
+            ],
+            [
+              0,
+              2,
+              19,
+              1
+            ],
+            [
+              164,
+              122,
+              0,
+              1163
+            ]
+          ],
+          "room": 10,
+          "instances": 0,
+          "proposals": 0,
+          "sam": false,
+          "semantic_source": "gt",
+          "priority": "large > small > floor",
+          "small_support_views": 2,
+          "instance_fusion": false,
+          "coverage_percent": 92.6038781163435,
+          "observed_accuracy": 92.70116661681125,
+          "observed_GT": 3343,
+          "view_consistency": {
+            "0": 0.8972809667673716,
+            "1": 0.9123013537374927,
+            "2": 0.923320994182972,
+            "3": 0.9024734982332155,
+            "4": 0.9314173742651861,
+            "5": 0.9530434782608695,
+            "6": 0.9336,
+            "7": 0.9453333333333334
+          },
+          "kept_views": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "consistency_threshold": 0.0
+        },
+        {
+          "accuracy": 86.08746697974757,
+          "correct": 2933,
+          "GT": 3407,
+          "classes": [
+            {
+              "class": "floor",
+              "gt": 931,
+              "correct": 622,
+              "predicted": 661,
+              "recall": 66.80988184747584,
+              "precision": 94.0998487140696
+            },
+            {
+              "class": "small",
+              "gt": 0,
+              "correct": 0,
+              "predicted": 0,
+              "recall": null,
+              "precision": null
+            },
+            {
+              "class": "large",
+              "gt": 2476,
+              "correct": 2311,
+              "predicted": 2383,
+              "recall": 93.33602584814217,
+              "precision": 96.97859840537139
+            }
+          ],
+          "height_MAE_cm": 9.923911040315794,
+          "cm": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              237,
+              622,
+              0,
+              72
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              126,
+              39,
+              0,
+              2311
+            ]
+          ],
+          "room": 9,
+          "instances": 0,
+          "proposals": 0,
+          "sam": false,
+          "semantic_source": "gt",
+          "priority": "large > small > floor",
+          "small_support_views": 2,
+          "instance_fusion": false,
+          "coverage_percent": 89.34546521866744,
+          "observed_accuracy": 96.35348226018397,
+          "observed_GT": 3044,
+          "view_consistency": {
+            "0": 0.7263513513513513,
+            "1": 0.7238749046529367,
+            "2": 0.5824345146379045,
+            "3": 0.620242214532872,
+            "4": 0.6225769669327252,
+            "5": 0.8255968169761273,
+            "6": 0.7425373134328358,
+            "7": 0.7533742331288343
+          },
+          "kept_views": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "consistency_threshold": 0.0
+        },
+        {
+          "accuracy": 81.97343453510436,
+          "correct": 1296,
+          "GT": 1581,
+          "classes": [
+            {
+              "class": "floor",
+              "gt": 830,
+              "correct": 642,
+              "predicted": 725,
+              "recall": 77.34939759036145,
+              "precision": 88.55172413793103
+            },
+            {
+              "class": "small",
+              "gt": 24,
+              "correct": 16,
+              "predicted": 16,
+              "recall": 66.66666666666667,
+              "precision": 100.0
+            },
+            {
+              "class": "large",
+              "gt": 727,
+              "correct": 638,
+              "predicted": 690,
+              "recall": 87.75790921595599,
+              "precision": 92.46376811594203
+            }
+          ],
+          "height_MAE_cm": 24.65102235855816,
+          "cm": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              140,
+              642,
+              0,
+              48
+            ],
+            [
+              0,
+              4,
+              16,
+              4
+            ],
+            [
+              10,
+              79,
+              0,
+              638
+            ]
+          ],
+          "room": 17,
+          "instances": 0,
+          "proposals": 0,
+          "sam": false,
+          "semantic_source": "gt",
+          "priority": "large > small > floor",
+          "small_support_views": 2,
+          "instance_fusion": false,
+          "coverage_percent": 90.5123339658444,
+          "observed_accuracy": 90.56603773584905,
+          "observed_GT": 1431,
+          "view_consistency": {
+            "0": 0.9203980099502488,
+            "1": 0.8586387434554974,
+            "2": 0.8525073746312685,
+            "3": 0.8980827447023209,
+            "4": 0.880466472303207,
+            "5": 0.8375125376128385,
+            "6": 0.9076212471131639,
+            "7": 0.9631449631449631
+          },
+          "kept_views": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "consistency_threshold": 0.0
+        }
+      ],
+      "pooled_accuracy": 85.22912305187253,
+      "GT": 8598,
+      "correct": 7328
+    },
+    "FAST_LIO_pose+GT_semantic_no_instance": {
+      "9": {
+        "accuracy": 64.9251540945113,
+        "correct": 2212,
+        "GT": 3407,
+        "classes": [
+          {
+            "class": "floor",
+            "gt": 931,
+            "correct": 221,
+            "predicted": 364,
+            "recall": 23.737916219119228,
+            "precision": 60.714285714285715
+          },
+          {
+            "class": "small",
+            "gt": 0,
+            "correct": 0,
+            "predicted": 5,
+            "recall": null,
+            "precision": 0.0
+          },
+          {
+            "class": "large",
+            "gt": 2476,
+            "correct": 1991,
+            "predicted": 2458,
+            "recall": 80.41195476575122,
+            "precision": 81.00081366965013
+          }
+        ],
+        "height_MAE_cm": 56.14317751206175,
+        "cm": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            243,
+            221,
+            0,
+            467
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            337,
+            143,
+            5,
+            1991
+          ]
+        ],
+        "room": 9,
+        "instances": 0,
+        "proposals": 0,
+        "sam": false,
+        "semantic_source": "gt",
+        "priority": "large > small > floor",
+        "small_support_views": 2,
+        "instance_fusion": false,
+        "coverage_percent": 82.97622541825653,
+        "observed_accuracy": 78.24548991864167,
+        "observed_GT": 2827,
+        "view_consistency": {
+          "0": 0.5884353741496599,
+          "1": 0.6391752577319587,
+          "2": 0.453198127925117,
+          "3": 0.6131117266851339,
+          "4": 0.621773288439955,
+          "5": 0.6765536723163842,
+          "6": 0.5375170532060027,
+          "7": 0.651414309484193
+        },
+        "kept_views": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "consistency_threshold": 0.0
+      },
+      "10": {
+        "accuracy": 58.83656509695291,
+        "correct": 2124,
+        "GT": 3610,
+        "classes": [
+          {
+            "class": "floor",
+            "gt": 2139,
+            "correct": 1095,
+            "predicted": 1342,
+            "recall": 51.19214586255259,
+            "precision": 81.5946348733234
+          },
+          {
+            "class": "small",
+            "gt": 22,
+            "correct": 3,
+            "predicted": 64,
+            "recall": 13.636363636363637,
+            "precision": 4.6875
+          },
+          {
+            "class": "large",
+            "gt": 1449,
+            "correct": 1026,
+            "predicted": 1941,
+            "recall": 70.80745341614907,
+            "precision": 52.85935085007728
+          }
+        ],
+        "height_MAE_cm": 117.16148310468655,
+        "cm": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            70,
+            1095,
+            60,
+            914
+          ],
+          [
+            0,
+            18,
+            3,
+            1
+          ],
+          [
+            193,
+            229,
+            1,
+            1026
+          ]
+        ],
+        "room": 10,
+        "instances": 0,
+        "proposals": 0,
+        "sam": false,
+        "semantic_source": "gt",
+        "priority": "large > small > floor",
+        "small_support_views": 2,
+        "instance_fusion": false,
+        "coverage_percent": 92.71468144044321,
+        "observed_accuracy": 63.45981475948611,
+        "observed_GT": 3347,
+        "view_consistency": {
+          "0": 0.6857727737973388,
+          "1": 0.7002398081534772,
+          "2": 0.6758488148622678,
+          "3": 0.6744995648389904,
+          "4": 0.6167979002624672,
+          "5": 0.7549728752260397,
+          "6": 0.75850622406639,
+          "7": 0.7728965003723008
+        },
+        "kept_views": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "consistency_threshold": 0.0
+      },
+      "17": {
+        "accuracy": 52.81467425679949,
+        "correct": 835,
+        "GT": 1581,
+        "classes": [
+          {
+            "class": "floor",
+            "gt": 830,
+            "correct": 414,
+            "predicted": 580,
+            "recall": 49.87951807228916,
+            "precision": 71.37931034482759
+          },
+          {
+            "class": "small",
+            "gt": 24,
+            "correct": 0,
+            "predicted": 18,
+            "recall": 0.0,
+            "precision": 0.0
+          },
+          {
+            "class": "large",
+            "gt": 727,
+            "correct": 421,
+            "predicted": 672,
+            "recall": 57.90921595598349,
+            "precision": 62.648809523809526
+          }
+        ],
+        "height_MAE_cm": 86.40073264926741,
+        "cm": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            162,
+            414,
+            11,
+            243
+          ],
+          [
+            0,
+            16,
+            0,
+            8
+          ],
+          [
+            149,
+            150,
+            7,
+            421
+          ]
+        ],
+        "room": 17,
+        "instances": 0,
+        "proposals": 0,
+        "sam": false,
+        "semantic_source": "gt",
+        "priority": "large > small > floor",
+        "small_support_views": 2,
+        "instance_fusion": false,
+        "coverage_percent": 80.32890575585073,
+        "observed_accuracy": 65.74803149606299,
+        "observed_GT": 1270,
+        "view_consistency": {
+          "0": 0.6306306306306306,
+          "1": 0.4914361001317523,
+          "2": 0.6102941176470589,
+          "3": 0.5354659248956884,
+          "4": 0.39558573853989815,
+          "5": 0.6056587091069849,
+          "6": 0.6846153846153846,
+          "7": 0.7336448598130841
+        },
+        "kept_views": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "consistency_threshold": 0.0
+      }
+    }
+  },
+  "interpretation": {
+    "largest_negative_module": "3D instance overwrite with current MobileSAM proposals",
+    "largest_positive_modules": [
+      "cross-view consistency gate",
+      "large-class evidence fraction 0.9 when gate removes a low-consistency tail",
+      "conditional 5 cm floor prior when projected floor evidence is high"
+    ],
+    "remaining_bottleneck": "2D ConvNeXt-L semantic labels and FAST-LIO pose drift; GT-pose+ConvNeXt is 67.52% pooled, while GT-pose+GT-semantic is 85.23% pooled"
+  }
+}
