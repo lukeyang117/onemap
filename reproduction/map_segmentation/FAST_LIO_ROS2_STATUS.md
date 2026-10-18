@@ -34,6 +34,12 @@ motion is still not equivalent to a real spinning LiDAR scan; all three-room
 accuracy numbers remain withheld until FAST-LIO itself produces a bounded
 trajectory.
 
+`generate_raycast_lidar.py` now produces collision-mesh raycast scans with
+per-ray azimuth time, explicit rings, interpolated rolling poses, and matching
+IMU export. The first full Room 9 pure replay still diverged to about 3.9 km
+over the sequence; this failure is retained as the current diagnostic and no
+ICP or simulator pose was used to replace it.
+
 Room 10, observed-only scoring:
 
 | map pose source | semantic accuracy | floor/stairs | small objects | large objects | height MAE |
