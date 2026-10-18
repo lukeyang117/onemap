@@ -44,6 +44,8 @@ def main():
             t = float(d["timestamp"])
             pts = np.asarray(d["points_body"], np.float32)
             n = len(pts)
+            rings = np.asarray(d["rings"], np.uint16) if "rings" in d else ((np.arange(n, dtype=np.uint16) // (n // args.scan_lines)) % args.scan_lines)
+            scan_lines = int(rings.max()) + 1 if len(rings) else args.scan_lines
             # Keep time zero so FAST-LIO derives per-ring timing from yaw; the
             # camera raster is arranged as 32 contiguous scan lines.
             rel = np.zeros(n, dtype=np.float32)
@@ -56,7 +58,7 @@ def main():
             raw[:, 8:12] = np.ascontiguousarray(pts[:, 2]).view(np.uint8).reshape(n, 4)
             raw[:, 16:20] = np.ones(n, np.float32).view(np.uint8).reshape(n, 4)
             raw[:, 20:24] = rel.view(np.uint8).reshape(n, 4)
-            raw[:, 24:26] = ((np.arange(n, dtype=np.uint16) // (n // args.scan_lines)) % args.scan_lines).view(np.uint8).reshape(n, 2)
+            raw[:, 24:26] = rings.view(np.uint8).reshape(n, 2)
             msg = PC(
                 Header(ros_time(t, Time), "lidar"), 1, n,
                 [PF("x", 0, 7, 1), PF("y", 4, 7, 1), PF("z", 8, 7, 1),

@@ -20,6 +20,10 @@ translation `[0.3, 0, 0.3]` m. The estimated trajectory was rigidly aligned to
 Habitat with a Kabsch fit and the eight mapping views were then replayed
 through OneMap. A near-range test with `blind=0.1` and 0.2 m map filtering was
 also run; it did not recover tracking in the two geometrically sparse rooms.
+The exporter now stores the depth row as an explicit `ring` field, sorts
+sector points by horizontal angle, and supports a four-sector/8-line profile.
+The `--fastlio` motion profile adds a 1.5 s stationary initialization and
+smoothstep acceleration between views.
 
 Room 10, observed-only scoring:
 
