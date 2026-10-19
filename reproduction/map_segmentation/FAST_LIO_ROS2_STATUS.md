@@ -226,3 +226,25 @@ aligned evaluation directory is unavailable, so no Room 17 online-plane
 accuracy is reported. Results are in
 `fastlio_results/online-ground-plane-summary.json` and
 `fastlio_results/online-ground-plane-ablation.png`.
+
+## Stair scene with added small objects (Room 11)
+
+The local HM3D semantic inventory identifies Room 11 as containing class 15
+(`stairs`). I prepared that room with the same nine banana/chef-can/cheezit
+assets and eight 30 cm forward-facing views, then rebuilt the saved OneMap and
+frontend feature cache.
+
+The single-plane baseline reaches 66.87% full-map accuracy. The multi-plane
+RANSAC model finds six horizontal candidates, including planes around 1.199 m,
+1.256 m, 0.917 m, and 0.578 m; the dominant plane has 30,180 inliers and 2.9
+mm P95 residual. Multi-plane fusion raises accuracy to **69.11%** and observed
+region accuracy to 79.46%. Preserving small-object evidence gives 65.51%
+overall but raises small-object recall from 0% to **73.68%**.
+
+The fine stair-surface diagnostic contains 407 GT cells. Correct stair cells
+increase from 2/407 with one plane to 28/407 with multiple planes. This is a
+partial improvement: many stair cells are not covered or are not classified as
+stairs by the RGB semantic frontend. The three-class scorer maps stairs into
+`floor_stairs`, so the stair-specific count is reported separately. See
+`fastlio_results/stair-room11-summary.json` and
+`fastlio_results/stair-room11-ablation.png`.

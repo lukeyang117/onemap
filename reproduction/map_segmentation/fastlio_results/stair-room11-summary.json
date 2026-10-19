@@ -1,0 +1,353 @@
+{
+  "scene": {
+    "room_id": 11,
+    "contains_stair_semantic_class": true,
+    "added_objects": 9,
+    "mapping_views": 8,
+    "camera_height_m": 0.3,
+    "camera_forward_offset_m": 0.3
+  },
+  "results": [
+    {
+      "method": "single_plane",
+      "accuracy_percent": 66.87344913151365,
+      "observed_accuracy_percent": 76.8901569186876,
+      "coverage_percent": 86.9727047146402,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 398,
+          "correct": 247,
+          "predicted": 288,
+          "recall": 62.06030150753769,
+          "precision": 85.76388888888889
+        },
+        {
+          "class": "small",
+          "gt": 19,
+          "correct": 13,
+          "predicted": 57,
+          "recall": 68.42105263157895,
+          "precision": 22.80701754385965
+        },
+        {
+          "class": "large",
+          "gt": 389,
+          "correct": 279,
+          "predicted": 356,
+          "recall": 71.72236503856041,
+          "precision": 78.37078651685393
+        }
+      ],
+      "ground_planes": null,
+      "stair_GT_cells": 407
+    },
+    {
+      "method": "multi_plane",
+      "accuracy_percent": 69.10669975186104,
+      "observed_accuracy_percent": 79.45791726105564,
+      "coverage_percent": 86.9727047146402,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 398,
+          "correct": 332,
+          "predicted": 450,
+          "recall": 83.41708542713567,
+          "precision": 73.77777777777777
+        },
+        {
+          "class": "small",
+          "gt": 19,
+          "correct": 0,
+          "predicted": 0,
+          "recall": 0.0,
+          "precision": null
+        },
+        {
+          "class": "large",
+          "gt": 389,
+          "correct": 225,
+          "predicted": 251,
+          "recall": 57.840616966580974,
+          "precision": 89.64143426294821
+        }
+      ],
+      "ground_planes": [
+        {
+          "plane_id": 0,
+          "normal": [
+            -0.004556079837812821,
+            0.9999821162305418,
+            0.003874190960575503
+          ],
+          "offset": -1.198961177336253,
+          "candidate_points": 32000,
+          "inlier_points": 30180,
+          "inlier_ratio": 0.943125,
+          "median_abs_residual_m": 0.0010512303200979067,
+          "p95_abs_residual_m": 0.0028661225513166096,
+          "height_reference_m": 1.1989826196650075
+        },
+        {
+          "plane_id": 1,
+          "normal": [
+            0.0024346998769356402,
+            0.999891777730502,
+            0.014508792625359588
+          ],
+          "offset": -1.2561013250118696,
+          "candidate_points": 32000,
+          "inlier_points": 532,
+          "inlier_ratio": 0.2923076923076923,
+          "median_abs_residual_m": 0.011083339553885962,
+          "p95_abs_residual_m": 0.024373439019879928,
+          "height_reference_m": 1.2562372778611077
+        },
+        {
+          "plane_id": 2,
+          "normal": [
+            0.016380328483237585,
+            0.9978965103220327,
+            -0.06272351653001232
+          ],
+          "offset": -0.9155135897529819,
+          "candidate_points": 32000,
+          "inlier_points": 229,
+          "inlier_ratio": 0.1777950310559006,
+          "median_abs_residual_m": 0.012556478213122002,
+          "p95_abs_residual_m": 0.02768748003663599,
+          "height_reference_m": 0.9174434225223767
+        },
+        {
+          "plane_id": 3,
+          "normal": [
+            0.03120874887247261,
+            0.9895478420414147,
+            -0.14078736557303162
+          ],
+          "offset": -0.571894839333569,
+          "candidate_points": 32000,
+          "inlier_points": 142,
+          "inlier_ratio": 0.13408876298394712,
+          "median_abs_residual_m": 0.016041267173635687,
+          "p95_abs_residual_m": 0.029170746985196852,
+          "height_reference_m": 0.5779355126011523
+        },
+        {
+          "plane_id": 4,
+          "normal": [
+            0.08345955746815686,
+            0.9950220028029736,
+            -0.054458389667512964
+          ],
+          "offset": -0.6834350739107511,
+          "candidate_points": 32000,
+          "inlier_points": 84,
+          "inlier_ratio": 0.0916030534351145,
+          "median_abs_residual_m": 0.009366977623180006,
+          "p95_abs_residual_m": 0.023990895285358436,
+          "height_reference_m": 0.6868542323541759
+        },
+        {
+          "plane_id": 5,
+          "normal": [
+            0.05642750994172174,
+            0.9872638988262425,
+            -0.14874787459383687
+          ],
+          "offset": -0.5083741307181042,
+          "candidate_points": 32000,
+          "inlier_points": 76,
+          "inlier_ratio": 0.09123649459783914,
+          "median_abs_residual_m": 0.015002830292056624,
+          "p95_abs_residual_m": 0.03133799366268952,
+          "height_reference_m": 0.5149323613701564
+        }
+      ],
+      "stair_GT_cells": 407
+    },
+    {
+      "method": "multi_plane_preserve_small",
+      "accuracy_percent": 65.50868486352357,
+      "observed_accuracy_percent": 75.320970042796,
+      "coverage_percent": 86.9727047146402,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 398,
+          "correct": 289,
+          "predicted": 383,
+          "recall": 72.61306532663316,
+          "precision": 75.45691906005221
+        },
+        {
+          "class": "small",
+          "gt": 19,
+          "correct": 14,
+          "predicted": 67,
+          "recall": 73.6842105263158,
+          "precision": 20.895522388059703
+        },
+        {
+          "class": "large",
+          "gt": 389,
+          "correct": 225,
+          "predicted": 251,
+          "recall": 57.840616966580974,
+          "precision": 89.64143426294821
+        }
+      ],
+      "ground_planes": [
+        {
+          "plane_id": 0,
+          "normal": [
+            -0.004556079837812821,
+            0.9999821162305418,
+            0.003874190960575503
+          ],
+          "offset": -1.198961177336253,
+          "candidate_points": 32000,
+          "inlier_points": 30180,
+          "inlier_ratio": 0.943125,
+          "median_abs_residual_m": 0.0010512303200979067,
+          "p95_abs_residual_m": 0.0028661225513166096,
+          "height_reference_m": 1.1989826196650075
+        },
+        {
+          "plane_id": 1,
+          "normal": [
+            0.0024346998769356402,
+            0.999891777730502,
+            0.014508792625359588
+          ],
+          "offset": -1.2561013250118696,
+          "candidate_points": 32000,
+          "inlier_points": 532,
+          "inlier_ratio": 0.2923076923076923,
+          "median_abs_residual_m": 0.011083339553885962,
+          "p95_abs_residual_m": 0.024373439019879928,
+          "height_reference_m": 1.2562372778611077
+        },
+        {
+          "plane_id": 2,
+          "normal": [
+            0.016380328483237585,
+            0.9978965103220327,
+            -0.06272351653001232
+          ],
+          "offset": -0.9155135897529819,
+          "candidate_points": 32000,
+          "inlier_points": 229,
+          "inlier_ratio": 0.1777950310559006,
+          "median_abs_residual_m": 0.012556478213122002,
+          "p95_abs_residual_m": 0.02768748003663599,
+          "height_reference_m": 0.9174434225223767
+        },
+        {
+          "plane_id": 3,
+          "normal": [
+            0.03120874887247261,
+            0.9895478420414147,
+            -0.14078736557303162
+          ],
+          "offset": -0.571894839333569,
+          "candidate_points": 32000,
+          "inlier_points": 142,
+          "inlier_ratio": 0.13408876298394712,
+          "median_abs_residual_m": 0.016041267173635687,
+          "p95_abs_residual_m": 0.029170746985196852,
+          "height_reference_m": 0.5779355126011523
+        },
+        {
+          "plane_id": 4,
+          "normal": [
+            0.08345955746815686,
+            0.9950220028029736,
+            -0.054458389667512964
+          ],
+          "offset": -0.6834350739107511,
+          "candidate_points": 32000,
+          "inlier_points": 84,
+          "inlier_ratio": 0.0916030534351145,
+          "median_abs_residual_m": 0.009366977623180006,
+          "p95_abs_residual_m": 0.023990895285358436,
+          "height_reference_m": 0.6868542323541759
+        },
+        {
+          "plane_id": 5,
+          "normal": [
+            0.05642750994172174,
+            0.9872638988262425,
+            -0.14874787459383687
+          ],
+          "offset": -0.5083741307181042,
+          "candidate_points": 32000,
+          "inlier_points": 76,
+          "inlier_ratio": 0.09123649459783914,
+          "median_abs_residual_m": 0.015002830292056624,
+          "p95_abs_residual_m": 0.03133799366268952,
+          "height_reference_m": 0.5149323613701564
+        }
+      ],
+      "stair_GT_cells": 407
+    },
+    {
+      "method": "multi_plane_gt_semantic_diagnostic",
+      "accuracy_percent": 79.52853598014889,
+      "observed_accuracy_percent": 85.46666666666667,
+      "coverage_percent": 93.05210918114143,
+      "classes": [
+        {
+          "class": "floor",
+          "gt": 398,
+          "correct": 337,
+          "predicted": 420,
+          "recall": 84.67336683417085,
+          "precision": 80.23809523809524
+        },
+        {
+          "class": "small",
+          "gt": 19,
+          "correct": 5,
+          "predicted": 7,
+          "recall": 26.31578947368421,
+          "precision": 71.42857142857143
+        },
+        {
+          "class": "large",
+          "gt": 389,
+          "correct": 299,
+          "predicted": 323,
+          "recall": 76.86375321336762,
+          "precision": 92.56965944272446
+        }
+      ],
+      "ground_planes": [
+        {
+          "plane_id": 0,
+          "normal": [
+            -0.0046563129958351445,
+            0.9999883206666339,
+            0.0012950983013605304
+          ],
+          "offset": -1.188452094839526,
+          "candidate_points": 32000,
+          "inlier_points": 31989,
+          "inlier_ratio": 0.99965625,
+          "median_abs_residual_m": 0.00044383744285614313,
+          "p95_abs_residual_m": 0.001442048453571807,
+          "height_reference_m": 1.1884659753298463
+        }
+      ],
+      "stair_GT_cells": 407
+    }
+  ],
+  "stair_specific_diagnostic": {
+    "single_plane_correct_cells": 2,
+    "multi_plane_correct_cells": 28,
+    "multi_plane_preserve_small_correct_cells": 27,
+    "stair_GT_cells": 407,
+    "note": "Stair surfaces are evaluated from the fine mesh class 15 mask; the main three-class score maps stairs into floor/stairs. Low stair recall means the eight views and/or frontend did not observe/classify those stair surfaces, not that plane fitting alone failed."
+  }
+}
