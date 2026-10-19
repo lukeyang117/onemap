@@ -1,0 +1,231 @@
+{
+  "protocol": {
+    "estimator": "RANSAC on projected FAST-LIO depth points whose per-view frontend label is floor",
+    "gt_used_for_estimator": false,
+    "plane_inlier_threshold_m": 0.03,
+    "minimum_inliers": 200
+  },
+  "room10_threshold_ablation": [
+    {
+      "threshold_m": 0.03,
+      "accuracy_percent": 61.35734072022161,
+      "observed_accuracy_percent": 68.53341584158416,
+      "coverage_percent": 89.52908587257618,
+      "floor_prior_enabled": true,
+      "ground_plane": {
+        "normal": [
+          0.02246214178174146,
+          0.9997463582988415,
+          0.0016343973755898362
+        ],
+        "offset": 1.7460774780401616,
+        "candidate_points": 32000,
+        "inlier_points": 16579,
+        "inlier_ratio": 0.51809375,
+        "median_abs_residual_m": 0.011017083230835834,
+        "p95_abs_residual_m": 0.026228160923965956
+      }
+    },
+    {
+      "threshold_m": 0.05,
+      "accuracy_percent": 62.49307479224377,
+      "observed_accuracy_percent": 69.8019801980198,
+      "coverage_percent": 89.52908587257618,
+      "floor_prior_enabled": true,
+      "ground_plane": {
+        "normal": [
+          0.02246214178174146,
+          0.9997463582988415,
+          0.0016343973755898362
+        ],
+        "offset": 1.7460774780401616,
+        "candidate_points": 32000,
+        "inlier_points": 16579,
+        "inlier_ratio": 0.51809375,
+        "median_abs_residual_m": 0.011017083230835834,
+        "p95_abs_residual_m": 0.026228160923965956
+      }
+    },
+    {
+      "threshold_m": 0.08,
+      "accuracy_percent": 62.797783933518005,
+      "observed_accuracy_percent": 70.14232673267327,
+      "coverage_percent": 89.52908587257618,
+      "floor_prior_enabled": true,
+      "ground_plane": {
+        "normal": [
+          0.02246214178174146,
+          0.9997463582988415,
+          0.0016343973755898362
+        ],
+        "offset": 1.7460774780401616,
+        "candidate_points": 32000,
+        "inlier_points": 16579,
+        "inlier_ratio": 0.51809375,
+        "median_abs_residual_m": 0.011017083230835834,
+        "p95_abs_residual_m": 0.026228160923965956
+      }
+    },
+    {
+      "threshold_m": 0.1,
+      "accuracy_percent": 63.10249307479224,
+      "observed_accuracy_percent": 70.48267326732673,
+      "coverage_percent": 89.52908587257618,
+      "floor_prior_enabled": true,
+      "ground_plane": {
+        "normal": [
+          0.02246214178174146,
+          0.9997463582988415,
+          0.0016343973755898362
+        ],
+        "offset": 1.7460774780401616,
+        "candidate_points": 32000,
+        "inlier_points": 16579,
+        "inlier_ratio": 0.51809375,
+        "median_abs_residual_m": 0.011017083230835834,
+        "p95_abs_residual_m": 0.026228160923965956
+      }
+    },
+    {
+      "threshold_m": 0.15,
+      "accuracy_percent": 63.51800554016621,
+      "observed_accuracy_percent": 70.94678217821782,
+      "coverage_percent": 89.52908587257618,
+      "floor_prior_enabled": true,
+      "ground_plane": {
+        "normal": [
+          0.02246214178174146,
+          0.9997463582988415,
+          0.0016343973755898362
+        ],
+        "offset": 1.7460774780401616,
+        "candidate_points": 32000,
+        "inlier_points": 16579,
+        "inlier_ratio": 0.51809375,
+        "median_abs_residual_m": 0.011017083230835834,
+        "p95_abs_residual_m": 0.026228160923965956
+      }
+    },
+    {
+      "threshold_m": 0.2,
+      "accuracy_percent": 63.49030470914128,
+      "observed_accuracy_percent": 70.91584158415841,
+      "coverage_percent": 89.52908587257618,
+      "floor_prior_enabled": true,
+      "ground_plane": {
+        "normal": [
+          0.02246214178174146,
+          0.9997463582988415,
+          0.0016343973755898362
+        ],
+        "offset": 1.7460774780401616,
+        "candidate_points": 32000,
+        "inlier_points": 16579,
+        "inlier_ratio": 0.51809375,
+        "median_abs_residual_m": 0.011017083230835834,
+        "p95_abs_residual_m": 0.026228160923965956
+      }
+    },
+    {
+      "threshold_m": 0.3,
+      "accuracy_percent": 63.04709141274238,
+      "observed_accuracy_percent": 70.42079207920793,
+      "coverage_percent": 89.52908587257618,
+      "floor_prior_enabled": true,
+      "ground_plane": {
+        "normal": [
+          0.02246214178174146,
+          0.9997463582988415,
+          0.0016343973755898362
+        ],
+        "offset": 1.7460774780401616,
+        "candidate_points": 32000,
+        "inlier_points": 16579,
+        "inlier_ratio": 0.51809375,
+        "median_abs_residual_m": 0.011017083230835834,
+        "p95_abs_residual_m": 0.026228160923965956
+      }
+    }
+  ],
+  "three_room_online_run": [
+    {
+      "room": 9,
+      "accuracy_percent": 54.53478133255063,
+      "observed_accuracy_percent": 64.40207972270363,
+      "coverage_percent": 84.67860287643087,
+      "floor_prior_enabled": false,
+      "floor_prior_source": "online_plane",
+      "ground_plane": {
+        "normal": [
+          0.012849765281325606,
+          0.9993130411060114,
+          -0.034761032891301426
+        ],
+        "offset": 1.7312581740329187,
+        "candidate_points": 32000,
+        "inlier_points": 18390,
+        "inlier_ratio": 0.5746875,
+        "median_abs_residual_m": 0.01371202501470048,
+        "p95_abs_residual_m": 0.024787134561041067
+      },
+      "kept_views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "room": 10,
+      "accuracy_percent": 62.49307479224377,
+      "observed_accuracy_percent": 69.8019801980198,
+      "coverage_percent": 89.52908587257618,
+      "floor_prior_enabled": true,
+      "floor_prior_source": "online_plane",
+      "ground_plane": {
+        "normal": [
+          0.02246214178174146,
+          0.9997463582988415,
+          0.0016343973755898362
+        ],
+        "offset": 1.7460774780401616,
+        "candidate_points": 32000,
+        "inlier_points": 16579,
+        "inlier_ratio": 0.51809375,
+        "median_abs_residual_m": 0.011017083230835834,
+        "p95_abs_residual_m": 0.026228160923965956
+      },
+      "kept_views": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "room": 17,
+      "accuracy_percent": 0.0,
+      "observed_accuracy_percent": null,
+      "coverage_percent": 0.0,
+      "floor_prior_enabled": false,
+      "floor_prior_source": "disabled",
+      "ground_plane": null,
+      "kept_views": [
+        0,
+        1,
+        2,
+        5,
+        6,
+        7
+      ]
+    }
+  ],
+  "room17_reproducibility_note": "The tracked raycast pose export has zero overlap with Room 17 valid GT grid in the current checkout; the previous transient aligned evaluation directory is unavailable, so no Room 17 online-plane accuracy is claimed.",
+  "interpretation": "Online plane is geometrically stable in Room 10 (normal y\u22480.9997, 16,579 inliers, P95 residual\u22482.6 cm). Its threshold is sensitive: 0.15 m gave the best Room 10 full-map score among tested values, but floor priors can suppress small-object evidence; deployment should preserve small labels and estimate ground height online."
+}

@@ -202,3 +202,27 @@ python reproduction/map_segmentation/run_3d_instance_pose_eval.py \
   --base /path/to/rayinst-all --out /tmp/robust-map \
   --rooms 10 --robust-fusion
 ```
+
+## Online ground-plane estimation (2026-10-19)
+
+`run_3d_instance_pose_eval.py` now has `--online-ground-plane`. It gathers
+depth points whose per-view frontend label is floor, fits an up-facing plane by
+RANSAC, refits it with SVD, and applies the floor prior using signed distance
+to that plane. It does not read `floor_y` while estimating the plane. The
+diagnostic output records candidate count, inlier ratio, normal, median
+residual, and P95 residual.
+
+Room 10 produced a stable plane with normal y=0.9997, 16,579 inliers, and P95
+residual 2.6 cm. Varying the signed-distance tolerance from 3 to 30 cm gave
+61.36%, 62.49%, 62.80%, 63.10%, **63.52%**, 63.49%, and 63.05%; 15 cm was the
+best tested value. The floor prior must preserve small-object labels or it can
+raise floor recall while reducing small-object recall to zero.
+
+Room 9 fitted a near-horizontal plane but its frontend floor evidence was
+below the automatic safety ratio, so the prior was disabled and the score
+remained 54.53%. The tracked Room 17 raycast pose export in the current
+checkout has zero overlap with its valid GT grid; the previous transient
+aligned evaluation directory is unavailable, so no Room 17 online-plane
+accuracy is reported. Results are in
+`fastlio_results/online-ground-plane-summary.json` and
+`fastlio_results/online-ground-plane-ablation.png`.
