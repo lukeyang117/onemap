@@ -1,0 +1,131 @@
+{
+  "view": 1,
+  "model": {
+    "detector": "IDEA-Research/grounding-dino-tiny",
+    "detector_revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+    "sam2": "facebook/sam2.1-hiera-tiny",
+    "sam2_revision": "de431c4043854a71d8101e17995dfe596bf101a5"
+  },
+  "detections": [
+    {
+      "box": [
+        305.079833984375,
+        345.1641387939453,
+        334.5544128417969,
+        378.2151641845703
+      ],
+      "score": 0.7098557353019714,
+      "phrase": "cracker box",
+      "mask_score": 0.96544349193573,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "too_tall",
+      "local_support_height_m": -1.6043591499328613,
+      "local_support_points": 4450
+    },
+    {
+      "box": [
+        300.5974884033203,
+        332.7298583984375,
+        321.3219909667969,
+        346.3837127685547
+      ],
+      "score": 0.537759006023407,
+      "phrase": "tin can",
+      "mask_score": 0.9194660782814026,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": -1.6047697067260742,
+      "local_support_points": 5362
+    },
+    {
+      "box": [
+        208.60369873046875,
+        356.4800720214844,
+        226.70516967773438,
+        370.9985656738281
+      ],
+      "score": 0.48305758833885193,
+      "phrase": "tin can",
+      "mask_score": 0.93643718957901,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": -1.603706955909729,
+      "local_support_points": 1856
+    },
+    {
+      "box": [
+        422.4770202636719,
+        162.1634063720703,
+        639.1886901855469,
+        411.21893310546875
+      ],
+      "score": 0.39106494188308716,
+      "phrase": "cracker box",
+      "mask_score": 0.9384141564369202,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": -1.5589677095413208,
+      "local_support_points": 6258
+    },
+    {
+      "box": [
+        422.55828857421875,
+        289.8807373046875,
+        587.3065795898438,
+        403.22174072265625
+      ],
+      "score": 0.27223318815231323,
+      "phrase": "cracker box",
+      "mask_score": 0.9403927326202393,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "unknown_or_low_confidence_phrase"
+    },
+    {
+      "box": [
+        405.2411346435547,
+        340.69482421875,
+        415.7342071533203,
+        350.5936279296875
+      ],
+      "score": 0.2709271311759949,
+      "phrase": "tin can",
+      "mask_score": 0.8649276494979858,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "unknown_or_low_confidence_phrase"
+    },
+    {
+      "box": [
+        0.2417144775390625,
+        0.129669189453125,
+        120.42486572265625,
+        353.7032470703125
+      ],
+      "score": 0.26993653178215027,
+      "phrase": "cracker box",
+      "mask_score": 0.9349850416183472,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "unknown_or_low_confidence_phrase"
+    },
+    {
+      "box": [
+        437.60791015625,
+        282.60284423828125,
+        447.5724182128906,
+        294.5220718383789
+      ],
+      "score": 0.25273397564888,
+      "phrase": "tin can",
+      "mask_score": 0.8788466453552246,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "unknown_or_low_confidence_phrase"
+    }
+  ]
+}

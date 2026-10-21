@@ -1,0 +1,89 @@
+{
+  "view": 5,
+  "model": {
+    "detector": "IDEA-Research/grounding-dino-tiny",
+    "detector_revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+    "sam2": "facebook/sam2.1-hiera-tiny",
+    "sam2_revision": "de431c4043854a71d8101e17995dfe596bf101a5"
+  },
+  "detections": [
+    {
+      "box": [
+        456.0932922363281,
+        404.6842041015625,
+        498.4654541015625,
+        441.1012725830078
+      ],
+      "score": 0.8238843083381653,
+      "phrase": "cracker box",
+      "mask_score": 0.9649524688720703,
+      "label": 42,
+      "accepted": true,
+      "filter_reason": "accepted",
+      "local_support_height_m": 1.1504449844360352,
+      "local_support_points": 97397
+    },
+    {
+      "box": [
+        0.20553207397460938,
+        522.36669921875,
+        123.79441833496094,
+        639.2684936523438
+      ],
+      "score": 0.8121689558029175,
+      "phrase": "cracker box",
+      "mask_score": 0.9680454134941101,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "too_tall",
+      "local_support_height_m": 1.1496434211730957,
+      "local_support_points": 50214
+    },
+    {
+      "box": [
+        116.55165100097656,
+        414.7520751953125,
+        173.40257263183594,
+        453.68353271484375
+      ],
+      "score": 0.7913188338279724,
+      "phrase": "tin can",
+      "mask_score": 0.9710602760314941,
+      "label": 41,
+      "accepted": true,
+      "filter_reason": "accepted",
+      "local_support_height_m": 1.1521081924438477,
+      "local_support_points": 9971
+    },
+    {
+      "box": [
+        259.20865631103516,
+        343.18011474609375,
+        297.27618408203125,
+        368.8091125488281
+      ],
+      "score": 0.7127847075462341,
+      "phrase": "tin can",
+      "mask_score": 0.967864990234375,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "too_tall",
+      "local_support_height_m": 1.1570833921432495,
+      "local_support_points": 53078
+    },
+    {
+      "box": [
+        326.40716552734375,
+        351.4403533935547,
+        333.2019500732422,
+        358.16493225097656
+      ],
+      "score": 0.30120551586151123,
+      "phrase": "tin can",
+      "mask_score": 0.8598991632461548,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "unknown_or_low_confidence_phrase"
+    }
+  ]
+}

@@ -29,8 +29,11 @@ sufficient fix.
    per-view object mask. SAM is only the mask refiner; class identity and
    objectness come from the detector/text match.
 4. Project mask pixels through the matching depth image and camera pose into
-   3D. Associate observations across views using 3D point/voxel overlap and
-   centroid distance, retain per-view support and detector scores, and reject
+   3D. Estimate each candidate's local support height from nearby points in
+   the OneMap-predicted terrain cells; do not use `design.json` floor height,
+   GT masks, or annotated mesh geometry for candidate filtering. Associate
+   observations across views using 3D point/voxel overlap and centroid
+   distance, retain per-view support and detector scores, and reject
    inconsistent clusters.
 5. Rasterize accepted 3D small-object evidence into semantic map cells while
    preserving the priority `large > small > terrain`. Existing terrain and
@@ -72,6 +75,13 @@ four rooms.
   avoid coupling new model dependencies into the existing OneMap runtime.
 - Pin Transformers to `4.57.3`, retain the current PyTorch `2.2.2` runtime, and
   record the resolved Hugging Face model revisions in result JSON.
+- Evaluate the exact open prompt phrases separately and reject ambiguous mixed
+  labels; suppress duplicated boxes after mapping them to full-image
+  coordinates.
+- Apply a compact-object gate using only predicted terrain support points:
+  0.30 m local XY radius, at least 3 support points, maximum 0.40 m horizontal
+  extent, maximum 0.14 m vertical extent, and height between -0.05 m and 0.45 m
+  above the estimated local support surface.
 - Cache per-view boxes, masks, text labels, and confidence for repeatable
   fusion and visual audit.
 - Pin model IDs/revisions and record software versions in result JSON.

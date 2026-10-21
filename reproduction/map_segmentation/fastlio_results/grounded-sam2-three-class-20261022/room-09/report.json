@@ -1,0 +1,248 @@
+{
+  "room": 9,
+  "variants": {
+    "base_map": {
+      "accuracy": 63.0173172879366,
+      "correct": 2147,
+      "GT": 3407,
+      "classes": [
+        {
+          "class": "terrain",
+          "gt": 931,
+          "correct": 227,
+          "predicted": 609,
+          "fp": 382,
+          "fn": 704,
+          "precision": 37.274220032840724,
+          "recall": 24.382384532760472,
+          "f1": 29.480519480519476
+        },
+        {
+          "class": "small",
+          "gt": 0,
+          "correct": 0,
+          "predicted": 48,
+          "fp": 48,
+          "fn": 0,
+          "precision": 0.0,
+          "recall": null,
+          "f1": null
+        },
+        {
+          "class": "large",
+          "gt": 2476,
+          "correct": 1920,
+          "predicted": 2487,
+          "fp": 567,
+          "fn": 556,
+          "precision": 77.20144752714113,
+          "recall": 77.54442649434571,
+          "f1": 77.372556921217
+        }
+      ],
+      "cm": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          137,
+          227,
+          0,
+          567
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          126,
+          382,
+          48,
+          1920
+        ]
+      ],
+      "coverage_percent": 92.28059876724392,
+      "room": 9,
+      "variant": "base_map",
+      "pose_source": "Habitat design pose",
+      "base_prediction_source": "/tmp/onemap-base-no-privilege-20261022/room-09.npz",
+      "semantic_priority": "large > small > terrain"
+    },
+    "per_view": {
+      "accuracy": 63.0173172879366,
+      "correct": 2147,
+      "GT": 3407,
+      "classes": [
+        {
+          "class": "terrain",
+          "gt": 931,
+          "correct": 227,
+          "predicted": 608,
+          "fp": 381,
+          "fn": 704,
+          "precision": 37.33552631578947,
+          "recall": 24.382384532760472,
+          "f1": 29.4996751137102
+        },
+        {
+          "class": "small",
+          "gt": 0,
+          "correct": 0,
+          "predicted": 49,
+          "fp": 49,
+          "fn": 0,
+          "precision": 0.0,
+          "recall": null,
+          "f1": null
+        },
+        {
+          "class": "large",
+          "gt": 2476,
+          "correct": 1920,
+          "predicted": 2487,
+          "fp": 567,
+          "fn": 556,
+          "precision": 77.20144752714113,
+          "recall": 77.54442649434571,
+          "f1": 77.372556921217
+        }
+      ],
+      "cm": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          137,
+          227,
+          0,
+          567
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          126,
+          381,
+          49,
+          1920
+        ]
+      ],
+      "coverage_percent": 92.28059876724392,
+      "room": 9,
+      "variant": "per_view",
+      "audit": {
+        "observations": 6,
+        "groups": 6,
+        "accepted_observations": 6,
+        "accepted_cells": 15
+      },
+      "small_support_views": 2,
+      "pose_source": "Habitat design pose",
+      "semantic_priority": "large > small > terrain"
+    },
+    "cross_view": {
+      "accuracy": 63.0173172879366,
+      "correct": 2147,
+      "GT": 3407,
+      "classes": [
+        {
+          "class": "terrain",
+          "gt": 931,
+          "correct": 227,
+          "predicted": 608,
+          "fp": 381,
+          "fn": 704,
+          "precision": 37.33552631578947,
+          "recall": 24.382384532760472,
+          "f1": 29.4996751137102
+        },
+        {
+          "class": "small",
+          "gt": 0,
+          "correct": 0,
+          "predicted": 49,
+          "fp": 49,
+          "fn": 0,
+          "precision": 0.0,
+          "recall": null,
+          "f1": null
+        },
+        {
+          "class": "large",
+          "gt": 2476,
+          "correct": 1920,
+          "predicted": 2487,
+          "fp": 567,
+          "fn": 556,
+          "precision": 77.20144752714113,
+          "recall": 77.54442649434571,
+          "f1": 77.372556921217
+        }
+      ],
+      "cm": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          137,
+          227,
+          0,
+          567
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          126,
+          381,
+          49,
+          1920
+        ]
+      ],
+      "coverage_percent": 92.28059876724392,
+      "room": 9,
+      "variant": "cross_view",
+      "audit": {
+        "observations": 6,
+        "groups": 3,
+        "accepted_observations": 4,
+        "accepted_cells": 9
+      },
+      "small_support_views": 2,
+      "pose_source": "Habitat design pose",
+      "semantic_priority": "large > small > terrain"
+    }
+  },
+  "observations": 6,
+  "candidate_count": 82,
+  "candidate_filter_counts": {
+    "too_wide": 35,
+    "unknown_or_low_confidence_phrase": 28,
+    "accepted": 6,
+    "no_local_predicted_terrain_support": 5,
+    "below_floor": 5,
+    "too_tall": 3
+  },
+  "predicted_terrain_support_points": 459690,
+  "model_revisions": {
+    "detector": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+    "sam2": "de431c4043854a71d8101e17995dfe596bf101a5"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "view": 7,
+  "model": {
+    "detector": "IDEA-Research/grounding-dino-tiny",
+    "detector_revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+    "sam2": "facebook/sam2.1-hiera-tiny",
+    "sam2_revision": "de431c4043854a71d8101e17995dfe596bf101a5"
+  },
+  "detections": [
+    {
+      "box": [
+        610.1445922851562,
+        356.8644714355469,
+        639.7178955078125,
+        406.2783203125
+      ],
+      "score": 0.7903859615325928,
+      "phrase": "tin can",
+      "mask_score": 0.9703601002693176,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": -1.6052037477493286,
+      "local_support_points": 6755
+    },
+    {
+      "box": [
+        37.81981658935547,
+        365.95733642578125,
+        139.571044921875,
+        423.2421875
+      ],
+      "score": 0.7109774351119995,
+      "phrase": "tin can",
+      "mask_score": 0.9752256274223328,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": -1.6047704219818115,
+      "local_support_points": 3705
+    },
+    {
+      "box": [
+        252.24053955078125,
+        354.5497741699219,
+        269.34326171875,
+        368.91221618652344
+      ],
+      "score": 0.4463382661342621,
+      "phrase": "cracker box",
+      "mask_score": 0.9493398666381836,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": -1.6062018871307373,
+      "local_support_points": 13817
+    },
+    {
+      "box": [
+        86.78024291992188,
+        269.46500396728516,
+        203.4950408935547,
+        364.0070037841797
+      ],
+      "score": 0.3626807928085327,
+      "phrase": "tin can",
+      "mask_score": 0.9567037224769592,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": 0.8279940485954285,
+      "local_support_points": 694
+    },
+    {
+      "box": [
+        257.1971740722656,
+        268.90496826171875,
+        377.4423828125,
+        361.4858703613281
+      ],
+      "score": 0.268863707780838,
+      "phrase": "cracker box",
+      "mask_score": 0.8381446599960327,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "unknown_or_low_confidence_phrase"
+    },
+    {
+      "box": [
+        576.5283813476562,
+        507.3495788574219,
+        639.5017700195312,
+        639.1993103027344
+      ],
+      "score": 0.24057334661483765,
+      "phrase": "banana",
+      "mask_score": 0.9901106953620911,
+      "label": 40,
+      "accepted": false,
+      "filter_reason": "unknown_or_low_confidence_phrase"
+    }
+  ]
+}

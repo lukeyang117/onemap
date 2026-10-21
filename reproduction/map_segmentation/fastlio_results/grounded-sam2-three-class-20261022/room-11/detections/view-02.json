@@ -1,0 +1,135 @@
+{
+  "view": 2,
+  "model": {
+    "detector": "IDEA-Research/grounding-dino-tiny",
+    "detector_revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+    "sam2": "facebook/sam2.1-hiera-tiny",
+    "sam2_revision": "de431c4043854a71d8101e17995dfe596bf101a5"
+  },
+  "detections": [
+    {
+      "box": [
+        330.19403076171875,
+        376.1872253417969,
+        357.54498291015625,
+        401.09423828125
+      ],
+      "score": 0.7827715873718262,
+      "phrase": "cracker box",
+      "mask_score": 0.9513092637062073,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": 1.1506060361862183,
+      "local_support_points": 96886
+    },
+    {
+      "box": [
+        558.4230346679688,
+        357.9910888671875,
+        634.2202758789062,
+        409.68951416015625
+      ],
+      "score": 0.659359872341156,
+      "phrase": "cracker box",
+      "mask_score": 0.9797739386558533,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "too_tall",
+      "local_support_height_m": 1.1498215198516846,
+      "local_support_points": 33670
+    },
+    {
+      "box": [
+        607.0787963867188,
+        423.15968322753906,
+        639.5814208984375,
+        463.9384460449219
+      ],
+      "score": 0.6425477862358093,
+      "phrase": "tin can",
+      "mask_score": 0.9628632664680481,
+      "label": 41,
+      "accepted": true,
+      "filter_reason": "accepted",
+      "local_support_height_m": 1.1527204513549805,
+      "local_support_points": 12898
+    },
+    {
+      "box": [
+        607.2930297851562,
+        423.5718994140625,
+        639.5611572265625,
+        447.5542297363281
+      ],
+      "score": 0.4578516185283661,
+      "phrase": "tin can",
+      "mask_score": 0.853820264339447,
+      "label": 41,
+      "accepted": true,
+      "filter_reason": "accepted",
+      "local_support_height_m": 1.1527022123336792,
+      "local_support_points": 13117
+    },
+    {
+      "box": [
+        454.2332763671875,
+        374.05511474609375,
+        467.17694091796875,
+        383.2225341796875
+      ],
+      "score": 0.4300891160964966,
+      "phrase": "tin can",
+      "mask_score": 0.9123360514640808,
+      "label": 41,
+      "accepted": true,
+      "filter_reason": "accepted",
+      "local_support_height_m": 1.148194670677185,
+      "local_support_points": 104356
+    },
+    {
+      "box": [
+        330.3475646972656,
+        375.99639892578125,
+        341.51519775390625,
+        398.8943634033203
+      ],
+      "score": 0.32339587807655334,
+      "phrase": "tin can",
+      "mask_score": 0.8928390145301819,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": 1.1505695581436157,
+      "local_support_points": 88294
+    },
+    {
+      "box": [
+        151.72486877441406,
+        112.4453125,
+        218.42581176757812,
+        237.0665740966797
+      ],
+      "score": 0.2579858899116516,
+      "phrase": "banana",
+      "mask_score": 0.9240764379501343,
+      "label": 40,
+      "accepted": false,
+      "filter_reason": "unknown_or_low_confidence_phrase"
+    },
+    {
+      "box": [
+        308.1756591796875,
+        497.7428283691406,
+        317.356201171875,
+        533.2080383300781
+      ],
+      "score": 0.24914540350437164,
+      "phrase": "banana",
+      "mask_score": 0.9110246896743774,
+      "label": 40,
+      "accepted": false,
+      "filter_reason": "unknown_or_low_confidence_phrase"
+    }
+  ]
+}

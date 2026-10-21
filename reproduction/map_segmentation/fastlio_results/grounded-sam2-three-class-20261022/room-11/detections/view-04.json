@@ -1,0 +1,91 @@
+{
+  "view": 4,
+  "model": {
+    "detector": "IDEA-Research/grounding-dino-tiny",
+    "detector_revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+    "sam2": "facebook/sam2.1-hiera-tiny",
+    "sam2_revision": "de431c4043854a71d8101e17995dfe596bf101a5"
+  },
+  "detections": [
+    {
+      "box": [
+        334.974609375,
+        346.3188781738281,
+        374.6329040527344,
+        378.82098388671875
+      ],
+      "score": 0.8304705023765564,
+      "phrase": "cracker box",
+      "mask_score": 0.9734242558479309,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "too_tall",
+      "local_support_height_m": 1.1497949361801147,
+      "local_support_points": 38140
+    },
+    {
+      "box": [
+        406.07611083984375,
+        380.6914978027344,
+        443.27296447753906,
+        405.48681640625
+      ],
+      "score": 0.7819719314575195,
+      "phrase": "tin can",
+      "mask_score": 0.9565910696983337,
+      "label": 41,
+      "accepted": true,
+      "filter_reason": "accepted",
+      "local_support_height_m": 1.1527044773101807,
+      "local_support_points": 10586
+    },
+    {
+      "box": [
+        172.32891845703125,
+        387.0352325439453,
+        206.36715698242188,
+        415.1483459472656
+      ],
+      "score": 0.770958662033081,
+      "phrase": "cracker box",
+      "mask_score": 0.9674105048179626,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "too_wide",
+      "local_support_height_m": 1.1505922079086304,
+      "local_support_points": 95139
+    },
+    {
+      "box": [
+        255.40725708007812,
+        368.9295349121094,
+        266.4140319824219,
+        377.0908508300781
+      ],
+      "score": 0.4781944751739502,
+      "phrase": "tin can",
+      "mask_score": 0.9109320044517517,
+      "label": 41,
+      "accepted": true,
+      "filter_reason": "accepted",
+      "local_support_height_m": 1.1481651067733765,
+      "local_support_points": 103891
+    },
+    {
+      "box": [
+        192.01792764663696,
+        386.9521484375,
+        206.39380264282227,
+        413.8349914550781
+      ],
+      "score": 0.4767855107784271,
+      "phrase": "cracker box",
+      "mask_score": 0.9154135584831238,
+      "label": 42,
+      "accepted": true,
+      "filter_reason": "accepted",
+      "local_support_height_m": 1.1506164073944092,
+      "local_support_points": 100689
+    }
+  ]
+}

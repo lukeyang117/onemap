@@ -1,0 +1,3 @@
+# Existing project runtime: PyTorch 2.2.2 + CUDA
+transformers==4.57.3
+accelerate>=1.2,<2.0

@@ -1,0 +1,59 @@
+{
+  "view": 0,
+  "model": {
+    "detector": "IDEA-Research/grounding-dino-tiny",
+    "detector_revision": "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+    "sam2": "facebook/sam2.1-hiera-tiny",
+    "sam2_revision": "de431c4043854a71d8101e17995dfe596bf101a5"
+  },
+  "detections": [
+    {
+      "box": [
+        252.0913543701172,
+        356.82269287109375,
+        308.3679504394531,
+        397.9954833984375
+      ],
+      "score": 0.857418417930603,
+      "phrase": "tin can",
+      "mask_score": 0.97802734375,
+      "label": 41,
+      "accepted": false,
+      "filter_reason": "too_tall",
+      "local_support_height_m": 1.1570779085159302,
+      "local_support_points": 52298
+    },
+    {
+      "box": [
+        472.3890075683594,
+        351.3827362060547,
+        494.4105529785156,
+        416.0128479003906
+      ],
+      "score": 0.7714449763298035,
+      "phrase": "banana",
+      "mask_score": 0.9456618428230286,
+      "label": 40,
+      "accepted": false,
+      "filter_reason": "too_tall",
+      "local_support_height_m": 1.1439037322998047,
+      "local_support_points": 12
+    },
+    {
+      "box": [
+        415.5872497558594,
+        114.15556335449219,
+        639.4322814941406,
+        447.02880859375
+      ],
+      "score": 0.34413960576057434,
+      "phrase": "cracker box",
+      "mask_score": 0.9517850279808044,
+      "label": 42,
+      "accepted": false,
+      "filter_reason": "no_local_predicted_terrain_support",
+      "local_support_height_m": null,
+      "local_support_points": 0
+    }
+  ]
+}
