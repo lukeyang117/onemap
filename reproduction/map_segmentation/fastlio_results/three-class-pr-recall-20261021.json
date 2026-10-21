@@ -1,0 +1,79 @@
+{
+  "protocol": {
+    "rooms": [9, 10, 11, 17],
+    "views_per_room": 8,
+    "camera_height_m": 0.3,
+    "forward_offset_m": 0.3,
+    "semantic_classes": {
+      "terrain": "floor and stairs merged",
+      "small": "banana, tin_can, cracker_box",
+      "large": "all remaining mapped furniture, structure, and large objects"
+    },
+    "flags": [
+      "--no-sam",
+      "--no-instance-fusion",
+      "--small-object-recovery",
+      "--small-support-views 1"
+    ],
+    "pose_source": "Habitat design poses; no fastlio-poses.json was available",
+    "scoring": "all valid GT cells; predicted label 0 is counted as an error; coverage is reported separately"
+  },
+  "per_room": [
+    {
+      "room": 9,
+      "accuracy_percent": 63.0173,
+      "coverage_percent": 92.2806,
+      "terrain": {"gt": 931, "tp": 227, "predicted": 609, "precision_percent": 37.2742, "recall_percent": 24.3824},
+      "small": {"gt": 0, "tp": 0, "predicted": 48, "precision_percent": 0.0, "recall_percent": null},
+      "large": {"gt": 2476, "tp": 1920, "predicted": 2487, "precision_percent": 77.2014, "recall_percent": 77.5444}
+    },
+    {
+      "room": 10,
+      "accuracy_percent": 71.4958,
+      "coverage_percent": 94.9030,
+      "terrain": {"gt": 2139, "tp": 1395, "predicted": 1529, "precision_percent": 91.2361, "recall_percent": 65.2174},
+      "small": {"gt": 22, "tp": 9, "predicted": 124, "precision_percent": 7.2581, "recall_percent": 40.9091},
+      "large": {"gt": 1449, "tp": 1177, "predicted": 1773, "precision_percent": 66.3847, "recall_percent": 81.2284}
+    },
+    {
+      "room": 11,
+      "accuracy_percent": 66.8734,
+      "coverage_percent": 86.9727,
+      "terrain": {"gt": 398, "tp": 247, "predicted": 288, "precision_percent": 85.7639, "recall_percent": 62.0603},
+      "small": {"gt": 19, "tp": 13, "predicted": 57, "precision_percent": 22.8070, "recall_percent": 68.4211},
+      "large": {"gt": 389, "tp": 279, "predicted": 356, "precision_percent": 78.3708, "recall_percent": 71.7224}
+    },
+    {
+      "room": 17,
+      "accuracy_percent": 68.3112,
+      "coverage_percent": 90.0063,
+      "terrain": {"gt": 830, "tp": 500, "predicted": 632, "precision_percent": 79.1139, "recall_percent": 60.2410},
+      "small": {"gt": 24, "tp": 10, "predicted": 52, "precision_percent": 19.2308, "recall_percent": 41.6667},
+      "large": {"gt": 727, "tp": 570, "predicted": 739, "precision_percent": 77.1313, "recall_percent": 78.4044}
+    }
+  ],
+  "pooled": {
+    "evaluated_gt_cells": 9404,
+    "correct_cells": 6347,
+    "accuracy_percent": 67.4926,
+    "average_coverage_percent": 91.0407,
+    "terrain": {"gt": 4298, "tp": 2369, "fp": 689, "fn": 1929, "predicted": 3058, "precision_percent": 77.4689, "recall_percent": 55.1187, "f1_percent": 64.4100},
+    "small": {"gt": 65, "tp": 32, "fp": 249, "fn": 33, "predicted": 281, "precision_percent": 11.3879, "recall_percent": 49.2308, "f1_percent": 18.4971},
+    "large": {"gt": 5041, "tp": 3946, "fp": 1409, "fn": 1095, "predicted": 5355, "precision_percent": 73.6881, "recall_percent": 78.2781, "f1_percent": 75.9138},
+    "macro_precision_percent": 54.1817,
+    "macro_recall_percent": 60.8758,
+    "macro_f1_percent": 52.9403,
+    "confusion_matrix_rows_gt_terrain_small_large_columns_pred_unmapped_terrain_small_large": [
+      [369, 2369, 174, 1386],
+      [0, 10, 32, 23],
+      [341, 679, 75, 3946]
+    ]
+  },
+  "room11_multi_plane_ablation": {
+    "accuracy_percent": 65.5087,
+    "terrain": {"precision_percent": 75.4569, "recall_percent": 72.6131},
+    "small": {"precision_percent": 20.8955, "recall_percent": 73.6842},
+    "large": {"precision_percent": 89.6414, "recall_percent": 57.8406},
+    "interpretation": "The plane prior improves terrain and small-object recall on the stair scene, but lowers large-object recall and total accuracy; it should remain a stair-specific option."
+  }
+}
